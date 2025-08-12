@@ -19,12 +19,12 @@ const ActivationPage = () => {
       }
 
       try {
-        console.log('🔄 Activating account with token:', token);
+
         
         // Use backend activation endpoint
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/activate/${token}`);
         
-        console.log('✅ Activation successful:', response.data);
+
         
         setStatus('success');
         setMessage(response.data.message);
@@ -40,7 +40,7 @@ const ActivationPage = () => {
         }, 5000);
 
       } catch (error) {
-        console.error('❌ Activation failed:', error);
+
         
         setStatus('error');
         

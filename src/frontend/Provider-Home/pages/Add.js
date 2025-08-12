@@ -49,18 +49,12 @@ export default function Add() {
     const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     const userType = localStorage.getItem('userType');
 
-    console.log('Add Equipment - User from localStorage:', user);
-    console.log('Add Equipment - UserType:', userType);
-
     // Try both id and _id fields
     const userId = user?.id || user?._id;
-    console.log('Add Equipment - Extracted User ID:', userId);
 
     if (userId) {
       setProviderId(userId);
-      console.log('Add Equipment - Provider ID set to:', userId);
     } else {
-      console.error('Add Equipment - No user ID found in localStorage');
       alert("Please login as a provider.");
       navigate("/signin/provider");
     }
@@ -91,7 +85,6 @@ export default function Add() {
     // Check if providerId is available
     if (!providerId) {
       alert("Provider ID not found. Please refresh the page and try again.");
-      console.error('Provider ID is missing:', { providerId, user });
       return;
     }
 
@@ -111,8 +104,6 @@ export default function Add() {
       images: []
     };
 
-    console.log('Equipment data being sent:', equipmentData);
-
     try {
       const response = await axios.post(API_CONFIG.getEquipmentUrl(), equipmentData);
       if (response.data) {
@@ -120,7 +111,6 @@ export default function Add() {
         navigate(`/provider/my-catalog`);
       }
     } catch (err) {
-      console.error("Failed to add equipment:", err);
       const errorMessage = err.response?.data?.message || "Failed to add equipment. Please try again.";
       alert(errorMessage);
     }

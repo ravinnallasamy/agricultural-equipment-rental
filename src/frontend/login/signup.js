@@ -85,8 +85,6 @@ export default function Signup() {
         ? `${baseUrl}/auth/provider/signup`
         : `${baseUrl}/auth/user/signup`;
 
-      console.log('Attempting signup to:', endpoint);
-
       const response = await axios.post(endpoint, signupData);
 
       if (response.status === 201) {
@@ -99,7 +97,6 @@ export default function Signup() {
         }, 2000);
       }
     } catch (err) {
-      console.error('Signup error:', err);
       const errorMessage = err.response?.data?.message || err.response?.data || 'Signup failed. Please try again.';
       alert(errorMessage);
     }

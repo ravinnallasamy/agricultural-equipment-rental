@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API_CONFIG from '../../config/api';
 import '../../Designs/Login.css';
 import Signinimage from '../../Assets/Signin.png';
 
@@ -21,8 +20,6 @@ export default function Signin() {
       const endpoint = userType === 'user'
         ? `${baseUrl}/auth/user/signin`
         : `${baseUrl}/auth/provider/signin`;
-
-      console.log('Attempting login to:', endpoint);
 
       const loginData = { email, password };
       const response = await axios.post(endpoint, loginData);
@@ -45,7 +42,6 @@ export default function Signin() {
       }
 
     } catch (err) {
-      console.error("Login error:", err);
       const errorMessage = err.response?.data || "Login failed. Please try again.";
       alert(errorMessage);
     }
