@@ -1,0 +1,89 @@
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import API_CONFIG from '../../config/api';
+import '../../Designs/Login.css';
+import Signinimage from '../../Assets/Signin.png';
+
+export default function Signin() {
+  const { userType } = useParams();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Use backend authentication endpoint - direct URL construction
+      const baseUrl = 'http://localhost:5000/api';
+      const endpoint = userType === 'user'
+        ? `${baseUrl}/auth/user/signin`
+        : `${baseUrl}/auth/provider/signin`;
+
+      console.log('Attempting login to:', endpoint);
+
+      const loginData = { email, password };
+      const response = await axios.post(endpoint, loginData);
+
+      if (response.data && response.data.token) {
+        // Store authentication data
+        localStorage.setItem('userType', userType);
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('loggedUser', JSON.stringify(response.data.user));
+
+        alert("Login successful");
+
+        if (userType === 'user') {
+          navigate('/user-home');
+        } else {
+          navigate('/provider-home');
+        }
+      } else {
+        alert("Invalid response from server");
+      }
+
+    } catch (err) {
+      console.error("Login error:", err);
+      const errorMessage = err.response?.data || "Login failed. Please try again.";
+      alert(errorMessage);
+    }
+  };
+
+  return (
+    <div className="login-page-container">
+      <div 
+        className="login-background"
+        style={{ backgroundImage: `url(${Signinimage})` }}
+      ></div>
+
+      <div className="login-container">
+        <h2 className="login-title">
+          {userType === 'user' ? 'User' : 'Provider'} Login
+        </h2>
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            type="email"
+            className="login-input"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            className="login-input"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit" className="login-button">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

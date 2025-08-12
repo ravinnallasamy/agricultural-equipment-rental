@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Backend Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .result { margin-top: 10px; padding: 10px; background-color: #f8f9fa; border-radius: 3px; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Complete Backend API Test</h1>
+    
+    <div class="test-section">
+        <h3>1. Health Check</h3>
+        <button onclick="testHealth()">Test Health</button>
+        <div id="health-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Get All Users</h3>
+        <button onclick="testUsers()">Get Users</button>
+        <div id="users-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Get All Equipment</h3>
+        <button onclick="testEquipment()">Get Equipment</button>
+        <div id="equipment-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. Get All Requests</h3>
+        <button onclick="testRequests()">Get Requests</button>
+        <div id="requests-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>5. Test User Signup</h3>
+        <button onclick="testUserSignup()">Test User Signup</button>
+        <div id="user-signup-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>6. Test User Login</h3>
+        <button onclick="testUserLogin()">Test User Login</button>
+        <div id="user-login-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>7. Test Password Verification</h3>
+        <button onclick="testPasswordVerification()">Test Password Verification</button>
+        <div id="password-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>8. Test Request Creation</h3>
+        <button onclick="testRequestCreation()">Test Request Creation</button>
+        <div id="request-creation-result" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        
+        async function testHealth() {
+            const resultDiv = document.getElementById('health-result');
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testUsers() {
+            const resultDiv = document.getElementById('users-result');
+            try {
+                const response = await fetch(`${API_BASE}/users`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong> Found ${data.length} users<pre>${JSON.stringify(data.slice(0, 2), null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testEquipment() {
+            const resultDiv = document.getElementById('equipment-result');
+            try {
+                const response = await fetch(`${API_BASE}/equipments`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong> Found ${data.length} equipment items<pre>${JSON.stringify(data.slice(0, 2), null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testRequests() {
+            const resultDiv = document.getElementById('requests-result');
+            try {
+                const response = await fetch(`${API_BASE}/requests`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong> Found ${data.length} requests<pre>${JSON.stringify(data.slice(0, 2), null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testUserSignup() {
+            const resultDiv = document.getElementById('user-signup-result');
+            try {
+                const response = await fetch(`${API_BASE}/auth/user/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: `Test User ${Date.now()}`,
+                        email: `testuser${Date.now()}@example.com`,
+                        password: 'password123',
+                        phone: '1234567890',
+                        address: 'Test Address'
+                    })
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testUserLogin() {
+            const resultDiv = document.getElementById('user-login-result');
+            try {
+                const response = await fetch(`${API_BASE}/auth/user/signin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'ravinit001@gmail.com',
+                        password: 'password123'
+                    })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    resultDiv.parentElement.className = 'test-section success';
+                } else {
+                    resultDiv.innerHTML = `<strong>⚠️ Expected Error:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    resultDiv.parentElement.className = 'test-section info';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testPasswordVerification() {
+            const resultDiv = document.getElementById('password-result');
+            try {
+                const response = await fetch(`${API_BASE}/auth/verify-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'ravinit001@gmail.com',
+                        password: 'password123',
+                        userType: 'user'
+                    })
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Endpoint Working:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+        
+        async function testRequestCreation() {
+            const resultDiv = document.getElementById('request-creation-result');
+            try {
+                const response = await fetch(`${API_BASE}/requests`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId: '689afeea48daeef86e0dea3d',
+                        customerName: 'Test Customer',
+                        customerEmail: 'test@example.com',
+                        equipmentId: 'test-equipment-id',
+                        equipmentName: 'Test Equipment',
+                        providerId: 'test-provider-id',
+                        status: 'pending',
+                        requestDate: new Date().toISOString()
+                    })
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test-section success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test-section error';
+            }
+        }
+    </script>
+</body>
+</html>

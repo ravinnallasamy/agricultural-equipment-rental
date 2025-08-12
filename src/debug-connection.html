@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Frontend-Backend Connection</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
+        .success { background-color: #d4edda; }
+        .error { background-color: #f8d7da; }
+        button { padding: 8px 12px; margin: 5px; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Frontend-Backend Connection</h1>
+    
+    <div class="test">
+        <h3>1. Test Health Endpoint</h3>
+        <button onclick="testHealth()">Test Health</button>
+        <div id="health-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>2. Test API Base URL</h3>
+        <button onclick="testApiBase()">Test API Base</button>
+        <div id="api-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>3. Test User Signin</h3>
+        <button onclick="testUserSignin()">Test User Signin</button>
+        <div id="signin-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>4. Test CORS</h3>
+        <button onclick="testCORS()">Test CORS</button>
+        <div id="cors-result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        const BACKEND_BASE = 'http://localhost:5000';
+        
+        async function testHealth() {
+            const resultDiv = document.getElementById('health-result');
+            try {
+                console.log('Testing health endpoint...');
+                const response = await fetch(`${BACKEND_BASE}/health`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test success';
+            } catch (error) {
+                console.error('Health test error:', error);
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test error';
+            }
+        }
+        
+        async function testApiBase() {
+            const resultDiv = document.getElementById('api-result');
+            try {
+                console.log('Testing API base endpoint...');
+                const response = await fetch(`${BACKEND_BASE}/`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                resultDiv.parentElement.className = 'test success';
+            } catch (error) {
+                console.error('API base test error:', error);
+                resultDiv.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test error';
+            }
+        }
+        
+        async function testUserSignin() {
+            const resultDiv = document.getElementById('signin-result');
+            try {
+                console.log('Testing user signin...');
+                const response = await fetch(`${API_BASE}/auth/user/signin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify({
+                        email: 'test@example.com',
+                        password: 'wrongpassword'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<strong>✅ Success:</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    resultDiv.parentElement.className = 'test success';
+                } else {
+                    const errorText = await response.text();
+                    resultDiv.innerHTML = `<strong>⚠️ Expected Error (${response.status}):</strong> ${errorText}`;
+                    resultDiv.parentElement.className = 'test success';
+                }
+            } catch (error) {
+                console.error('Signin test error:', error);
+                resultDiv.innerHTML = `<strong>❌ Connection Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test error';
+            }
+        }
+        
+        async function testCORS() {
+            const resultDiv = document.getElementById('cors-result');
+            try {
+                console.log('Testing CORS...');
+                const response = await fetch(`${API_BASE}/users`, {
+                    method: 'GET',
+                    headers: {
+                        'Origin': window.location.origin
+                    }
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>✅ CORS Working:</strong> Found ${data.length} users`;
+                resultDiv.parentElement.className = 'test success';
+            } catch (error) {
+                console.error('CORS test error:', error);
+                resultDiv.innerHTML = `<strong>❌ CORS Error:</strong> ${error.message}`;
+                resultDiv.parentElement.className = 'test error';
+            }
+        }
+        
+        // Display current info
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Current origin:', window.location.origin);
+            console.log('API Base URL:', API_BASE);
+            console.log('Backend Base URL:', BACKEND_BASE);
+        });
+    </script>
+</body>
+</html>

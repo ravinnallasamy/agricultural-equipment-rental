@@ -1,0 +1,220 @@
+.add-equipment-container {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-equipment-header {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  font-size: 28px;
+}
+
+.search-input {
+  padding: 12px 15px;
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 500px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.category-header {
+  cursor: pointer;
+  color: #2c3e50;
+  background-color: #f8f9fa;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.category-header:hover {
+  background-color: #e9ecef;
+  color: #3498db;
+}
+
+.items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.item-button {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #e8f4fc;
+  color: #2980b9;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+  font-size: 14px;
+}
+
+.item-button:hover {
+  background-color: #d4e6f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.form-container {
+  background-color: #f8f9fa;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.form-title {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.select-field {
+  padding: 10px;
+  margin-left: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+}
+
+.submit-button {
+  padding: 12px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-right: 10px;
+}
+
+.submit-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.back-button {
+  background-color: #e74c3c;
+}
+
+.back-button:hover {
+  background-color: #c0392b;
+}
+
+.search-results {
+  margin-top: 20px;
+}
+
+.search-title {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.no-results {
+  color: #7f8c8d;
+  font-style: italic;
+  grid-column: 1 / -1;
+  text-align: center;
+}
+/* Add this new class */
+.equipment-list-container {
+  max-height: 60vh; /* Adjust this value as needed */
+  overflow-y: auto;
+  padding-right: 10px; /* Prevents content from touching scrollbar */
+  margin-bottom: 20px;
+}
+
+/* Update the items container to be more compact */
+.items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 5px;
+}
+
+/* Custom scrollbar styling */
+.equipment-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.equipment-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.equipment-list-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.equipment-list-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .items-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  
+  .add-equipment-container {
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .items-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-container {
+    padding: 15px;
+  }
+  
+  .submit-button, .back-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

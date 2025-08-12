@@ -1,0 +1,161 @@
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden; /* Allow vertical scrolling, prevent horizontal */
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+.signup-page-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Changed from center to flex-start */
+  position: relative;
+  padding: 2rem 0; /* Add padding for spacing */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+.signup-background {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../Assets/Signup.png'); 
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+  z-index: -1;
+  opacity: 0.85;
+}
+
+.signup-form-container {
+  width: 90%;
+  max-width: 500px; /* Increased width for business fields */
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(3px);
+  text-align: center;
+  margin: 1rem auto; /* Add margin for better spacing */
+  max-height: 90vh; /* Limit height */
+  overflow-y: auto; /* Allow scrolling within form if needed */
+  animation: fadeInUp 0.6s ease-out; /* Smooth entrance animation */
+}
+
+/* Animation for form entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.signup-form-container h2 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.signup-form-container input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.signup-form-container input:focus {
+  border-color: #3498db;
+}
+
+/* Style for select dropdown */
+.signup-form-container select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background-color: white;
+  cursor: pointer;
+}
+
+.signup-form-container select:focus {
+  border-color: #3498db;
+}
+
+/* Business fields section styling */
+.business-fields {
+  border-top: 2px solid #e0e0e0;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.business-fields h3 {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.signup-form-container button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.signup-form-container button:hover {
+  background-color: #219653;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .signup-page-container {
+    padding: 1rem 0;
+  }
+
+  .signup-form-container {
+    padding: 1.8rem;
+    max-width: 95%;
+    margin: 0.5rem auto;
+  }
+
+  .signup-form-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .signup-form-container input,
+  .signup-form-container select {
+    font-size: 0.95rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .signup-form-container button {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .business-fields h3 {
+    font-size: 1.1rem;
+  }
+}

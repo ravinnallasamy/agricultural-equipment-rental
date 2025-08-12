@@ -1,0 +1,164 @@
+/* EquipmentCatalog.css - Consistent with MyRequest styling */
+
+.equipment-catalog {
+  min-height: 100vh;
+  padding: 2rem;
+  background: #f8f9fa; /* Light gray background similar to MyRequest */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.equipment-catalog h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 2.2rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.equipment-catalog h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.no-equipment {
+  text-align: center;
+  color: #718096;
+  font-size: 1.2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.equipment-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.equipment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-body p {
+  margin: 0.8rem 0;
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-body strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.price {
+  color: #38a169;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.availability {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.available {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.not-available {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.loading-spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #667eea;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation for card entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.equipment-card {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.equipment-card:nth-child(1) { animation-delay: 0.1s; }
+.equipment-card:nth-child(2) { animation-delay: 0.2s; }
+.equipment-card:nth-child(3) { animation-delay: 0.3s; }
+.equipment-card:nth-child(4) { animation-delay: 0.4s; }
+.equipment-card:nth-child(5) { animation-delay: 0.5s; }
+.equipment-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .equipment-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .equipment-catalog h2 {
+    font-size: 1.8rem;
+  }
+}

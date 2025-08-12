@@ -1,0 +1,202 @@
+/* MyRentalRequest.css - Rental Requests Page Styles */
+.rental-requests-page {
+  --primary: #6c5ce7;
+  --secondary: #a29bfe;
+  --success: #4CAF50;
+  --danger: #f44336;
+  --warning: #FF9800;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --text: #495057;
+  --text-light: #6c757d;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+/* Page Header */
+.rental-requests-page .page-header {
+  font-size: 2rem;
+  color: var(--dark);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+/* Empty State */
+.rental-requests-page .no-requests {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Requests Grid */
+.rental-requests-page .requests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Request Card */
+.rental-requests-page .request-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.rental-requests-page .request-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.rental-requests-page .equipment-name {
+  font-size: 1.25rem;
+  color: var(--dark);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.rental-requests-page .request-detail {
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.rental-requests-page .request-detail strong {
+  color: var(--dark);
+}
+
+/* Status Badge */
+.rental-requests-page .status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.rental-requests-page .status-pending {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: var(--warning);
+}
+
+.rental-requests-page .status-approved {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--success);
+}
+
+.rental-requests-page .status-rejected {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--danger);
+}
+
+/* Action Buttons */
+.rental-requests-page .action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.rental-requests-page .action-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.rental-requests-page .approve-button {
+  background-color: var(--success);
+  color: white;
+}
+
+.rental-requests-page .reject-button {
+  background-color: var(--danger);
+  color: white;
+}
+
+.rental-requests-page .action-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rental-requests-page .action-button:active {
+  transform: translateY(0);
+}
+/* Add these to your existing MyRentalRequest.css */
+
+.status-available {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--success);
+}
+
+.status-unavailable {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--danger);
+}
+
+.request-card {
+  position: relative;
+}
+
+/* Add some spacing between status badges */
+.request-detail .status-badge {
+  margin-left: 0.5rem;
+}
+
+/* Make equipment name stand out more */
+.equipment-name {
+  font-size: 1.3rem;
+  color: var(--dark);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .rental-requests-page {
+    padding: 1.5rem;
+  }
+  
+  .rental-requests-page .requests-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .rental-requests-page .page-header {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rental-requests-page {
+    padding: 1rem;
+  }
+  
+  .rental-requests-page .page-header {
+    font-size: 1.5rem;
+  }
+  
+  .rental-requests-page .action-buttons {
+    flex-direction: column;
+  }
+  
+  .rental-requests-page .action-button {
+    width: 100%;
+  }
+}
