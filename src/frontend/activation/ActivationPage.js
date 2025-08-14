@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_CONFIG from '../../config/api';
 import '../../Designs/Activation.css';
 
 const ActivationPage = () => {
@@ -22,7 +23,7 @@ const ActivationPage = () => {
 
         
         // Use backend activation endpoint
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/activate/${token}`);
+        const response = await axios.get(`${API_CONFIG.BASE_URL}/auth/user/activate/${token}`);
         
 
         

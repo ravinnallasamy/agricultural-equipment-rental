@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_CONFIG from '../../config/api';
 import '../../Designs/PHome.css';
 import logo from '../../Assets/Logo.png';
 
@@ -12,17 +13,16 @@ export default function PHome() {
 
   const fetchEquipment = useCallback(async () => {
     try {
-      // Use backend API to get provider's equipment
-      const baseUrl = 'http://localhost:5000/api';
+      // Use API_CONFIG for proper environment handling
       const providerId = provider.id;
 
       // Try to get provider-specific equipment first
       try {
-        const res = await axios.get(`${baseUrl}/providers/${providerId}/equipment`);
+        const res = await axios.get(API_CONFIG.getProviderEquipmentUrl(providerId));
         setEquipmentList(res.data.data || res.data);
       } catch (providerErr) {
         // Fallback: get all equipment and filter by providerId
-        const res = await axios.get(`${baseUrl}/equipments`);
+        const res = await axios.get(API_CONFIG.getEquipmentUrl());
         const filtered = res.data.filter(item =>
           item.providerId === providerId ||
           item.providerId === providerId.toString()

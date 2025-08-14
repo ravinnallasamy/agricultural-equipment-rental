@@ -126,8 +126,7 @@ export default function Profile() {
       }
 
       // Use backend password verification endpoint
-      const baseUrl = 'http://localhost:5000/api';
-      const response = await axios.post(`${baseUrl}/auth/verify-password`, {
+      const response = await axios.post(`${API_CONFIG.BASE_URL}/auth/verify-password`, {
         email: userData.email,
         password: password.trim(),
         userType: userType

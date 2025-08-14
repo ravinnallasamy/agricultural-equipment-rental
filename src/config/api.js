@@ -35,7 +35,7 @@ const API_CONFIG = {
     }
 
     // Development fallback
-    return 'http://localhost:5001/api';
+    return 'http://localhost:5000/api';
   })(),
 
   // Current frontend info

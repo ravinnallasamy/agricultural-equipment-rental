@@ -19,6 +19,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_CONFIG from '../../config/api';
 import '../../Designs/Signup.css';
 import bgImage from '../../Assets/Signup.png';
 
@@ -78,11 +79,10 @@ export default function Signup() {
         signupData.licenseNumber = form.licenseNumber || '';
       }
 
-      // Use backend authentication endpoint - direct URL construction
-      const baseUrl = 'http://localhost:5000/api';
+      // Use API_CONFIG for proper environment handling
       const endpoint = userType === 'provider'
-        ? `${baseUrl}/auth/provider/signup`
-        : `${baseUrl}/auth/user/signup`;
+        ? API_CONFIG.getAuthUrl(API_CONFIG.AUTH.PROVIDER_SIGNUP)
+        : API_CONFIG.getAuthUrl(API_CONFIG.AUTH.USER_SIGNUP);
 
       const response = await axios.post(endpoint, signupData);
 
