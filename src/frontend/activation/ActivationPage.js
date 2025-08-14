@@ -22,8 +22,14 @@ const ActivationPage = () => {
       try {
 
         
-        // Use backend activation endpoint
-        const response = await axios.get(`${API_CONFIG.BASE_URL}/auth/user/activate/${token}`);
+        // Try user activation first, then provider activation if that fails
+        let response;
+        try {
+          response = await axios.get(`${API_CONFIG.BASE_URL}/auth/user/activate/${token}`);
+        } catch (userError) {
+          // If user activation fails, try provider activation
+          response = await axios.get(`${API_CONFIG.BASE_URL}/auth/provider/activate/${token}`);
+        }
         
 
         
