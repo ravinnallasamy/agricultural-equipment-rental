@@ -7,24 +7,18 @@ import equipment1 from '../../Assets/Logo.png';
 import equipment2 from '../../Assets/img1.png';
 import equipment3 from '../../Assets/img2.png';
 import equipment4 from '../../Assets/img3.png';
-import { 
-  FiUser, 
-  FiLogOut, 
-  FiShoppingCart, 
-  FiPlusCircle, 
+import {
+  FiUser,
+  FiLogOut,
+  FiPlusCircle,
   FiList,
   FiCheckCircle,
-  FiClock,
   FiDollarSign,
   FiShield
 } from 'react-icons/fi';
-import { 
-  FaTractor, 
-  FaTools, 
-  FaSeedling,
-  FaLeaf,
-  FaWater,
-  FaWarehouse
+import {
+  FaTractor,
+  FaSeedling
 } from 'react-icons/fa';
 import { GiFarmer, GiPlantWatering } from 'react-icons/gi';
 import { MdPrecisionManufacturing, MdLocalShipping } from 'react-icons/md';
@@ -70,26 +64,7 @@ export default function CHome() {
     { icon: <FiCheckCircle className="feature-icon" size={40} />, title: "Easy Booking", text: "Simple online reservation system" }
   ];
 
-  const quickActions = [
-    { 
-      icon: <FiPlusCircle className="action-icon" size={32} />, 
-      title: "Request Equipment", 
-      text: "Browse and request farming tools", 
-      action: () => navigate(`/user/request-item`)
-    },
-    {
-      icon: <FiList className="action-icon" size={32} />,
-      title: "My Rentals",
-      text: "View your current and past rentals",
-      action: () => navigate(`/user/My-Request`)
-    },
-    {
-      icon: <FiClock className="action-icon" size={32} />,
-      title: "Rental History",
-      text: "Check your equipment rental timeline",
-      action: () => navigate(`/user/rental-history`)
-    }
-  ];
+
 
   useEffect(() => {
     const stored = localStorage.getItem('loggedUser');
@@ -249,30 +224,30 @@ export default function CHome() {
           <div className="footer-links">
             <div className="link-group">
               <h4>Services</h4>
-              <a href="#">Equipment Rental</a>
-              <a href="#">Maintenance</a>
-              <a href="#">Delivery</a>
+              <button type="button" className="footer-link">Equipment Rental</button>
+              <button type="button" className="footer-link">Maintenance</button>
+              <button type="button" className="footer-link">Delivery</button>
             </div>
             <div className="link-group">
               <h4>Company</h4>
-              <a href="#">About Us</a>
-              <a href="#">Careers</a>
-              <a href="#">Blog</a>
+              <button type="button" className="footer-link">About Us</button>
+              <button type="button" className="footer-link">Careers</button>
+              <button type="button" className="footer-link">Blog</button>
             </div>
             <div className="link-group">
               <h4>Support</h4>
-              <a href="#">Contact Us</a>
-              <a href="#">FAQs</a>
-              <a href="#">Help Center</a>
+              <button type="button" className="footer-link">Contact Us</button>
+              <button type="button" className="footer-link">FAQs</button>
+              <button type="button" className="footer-link">Help Center</button>
             </div>
           </div>
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Uzhavan Rentals. All rights reserved.</p>
           <div className="legal-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
+            <button type="button" className="footer-link">Privacy Policy</button>
+            <button type="button" className="footer-link">Terms of Service</button>
+            <button type="button" className="footer-link">Cookie Policy</button>
           </div>
         </div>
       </footer>

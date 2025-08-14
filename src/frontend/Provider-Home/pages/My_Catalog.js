@@ -1,28 +1,18 @@
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
 import logo from '../../../Assets/Logo.png';
-import { 
-  FiUser, 
-  FiLogOut, 
+import {
+  FiUser,
+  FiLogOut,
   FiEdit,
   FiTrash2,
-  FiPlusCircle,
-  FiTrendingUp,
-  FiSettings,
-  FiBarChart
+  FiPlusCircle
 } from 'react-icons/fi';
-import { 
-  FaTractor, 
-  FaTools, 
-  FaSeedling,
-  FaLeaf,
-  FaPhone,
-  FaEnvelope,
-  FaMapMarkerAlt,
+import {
   FaBoxes
 } from 'react-icons/fa';
 
@@ -42,23 +32,22 @@ export default function MyCatalog() {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    if (providerId) {
-      fetchEquipment();
-    }
-  }, [providerId]);
-
-  const fetchEquipment = async () => {
+  const fetchEquipment = useCallback(async () => {
     try {
       // Use provider-specific equipment endpoint
       const response = await axios.get(API_CONFIG.getProviderEquipmentUrl(providerId));
       setEquipmentList(response.data.data || response.data);
       setIsLoading(false);
     } catch (err) {
-      console.error("Error fetching equipment:", err);
       setIsLoading(false);
     }
-  };
+  }, [providerId]);
+
+  useEffect(() => {
+    if (providerId) {
+      fetchEquipment();
+    }
+  }, [providerId, fetchEquipment]);
 
   const handleDelete = async (equipmentId) => {
     if (window.confirm("Are you sure you want to delete this equipment?")) {
@@ -67,14 +56,13 @@ export default function MyCatalog() {
         alert("Equipment deleted successfully!");
         fetchEquipment(); // Refresh the list
       } catch (err) {
-        console.error("Error deleting equipment:", err);
         const errorMessage = err.response?.data?.message || "Failed to delete equipment. Please try again.";
         alert(errorMessage);
       }
     }
   };
 
-  const handleEdit = (equipment) => {
+  const handleEdit = () => {
     // Navigate to edit page or open edit modal
     alert("Edit functionality will be implemented here");
   };
@@ -87,7 +75,6 @@ export default function MyCatalog() {
       alert(`Equipment ${!currentStatus ? 'made available' : 'made unavailable'} successfully!`);
       fetchEquipment(); // Refresh the list
     } catch (err) {
-      console.error("Error updating equipment status:", err);
       const errorMessage = err.response?.data?.message || "Failed to update equipment status. Please try again.";
       alert(errorMessage);
     }
@@ -218,7 +205,5 @@ export default function MyCatalog() {
     </div>
   );
 }
-
-
 
   

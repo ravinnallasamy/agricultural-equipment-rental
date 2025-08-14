@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_CONFIG from '../../config/api';
 import '../../Designs/Login.css';
 import Signinimage from '../../Assets/Signin.png';
 
@@ -15,11 +16,10 @@ export default function Signin() {
     e.preventDefault();
 
     try {
-      // Use backend authentication endpoint - direct URL construction
-      const baseUrl = 'http://localhost:5000/api';
+      // Use API_CONFIG for proper environment handling
       const endpoint = userType === 'user'
-        ? `${baseUrl}/auth/user/signin`
-        : `${baseUrl}/auth/provider/signin`;
+        ? API_CONFIG.getAuthUrl(API_CONFIG.AUTH.USER_SIGNIN)
+        : API_CONFIG.getAuthUrl(API_CONFIG.AUTH.PROVIDER_SIGNIN);
 
       const loginData = { email, password };
       const response = await axios.post(endpoint, loginData);

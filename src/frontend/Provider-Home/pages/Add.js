@@ -4,24 +4,13 @@ import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
 import logo from '../../../Assets/Logo.png';
-import { 
-  FiUser, 
-  FiLogOut, 
-  FiPlusCircle,
+import {
+  FiUser,
+  FiLogOut,
   FiSave,
-  FiX,
-  FiTrendingUp,
-  FiSettings,
-  FiBarChart
+  FiX
 } from 'react-icons/fi';
-import { 
-  FaTractor, 
-  FaTools, 
-  FaSeedling,
-  FaLeaf,
-  FaPhone,
-  FaEnvelope,
-  FaMapMarkerAlt,
+import {
   FaPlus
 } from 'react-icons/fa';
 
@@ -39,15 +28,16 @@ export default function Add() {
   // Provider identification - links equipment to the logged-in provider
   const [providerId, setProviderId] = useState("");
 
-  // Loading state for form submission feedback
+  // Loading state for form submission
   const [isLoading, setIsLoading] = useState(false);
+
+
 
   // Navigation hook for redirecting after successful equipment addition
   const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    const userType = localStorage.getItem('userType');
 
     // Try both id and _id fields
     const userId = user?.id || user?._id;
@@ -76,6 +66,9 @@ export default function Add() {
       return;
     }
 
+    // Get provider info from localStorage
+    const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+
     // Check if address is available from form or user profile
     if (!formData.address && !user.address) {
       alert("Address is required. Please add an address to your profile or specify equipment location.");
@@ -87,9 +80,6 @@ export default function Add() {
       alert("Provider ID not found. Please refresh the page and try again.");
       return;
     }
-
-    // Get provider info from localStorage
-    const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
     const equipmentData = {
       ...formData,
@@ -105,6 +95,7 @@ export default function Add() {
     };
 
     try {
+      setIsLoading(true);
       const response = await axios.post(API_CONFIG.getEquipmentUrl(), equipmentData);
       if (response.data) {
         alert("Equipment added successfully!");
@@ -113,6 +104,8 @@ export default function Add() {
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Failed to add equipment. Please try again.";
       alert(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 

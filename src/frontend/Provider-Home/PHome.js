@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API_CONFIG from '../../config/api';
 import '../../Designs/PHome.css';
 import logo from '../../Assets/Logo.png';
 
@@ -10,6 +9,32 @@ export default function PHome() {
   const [provider, setProvider] = useState(null);
   const [equipmentList, setEquipmentList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const fetchEquipment = useCallback(async () => {
+    try {
+      // Use backend API to get provider's equipment
+      const baseUrl = 'http://localhost:5000/api';
+      const providerId = provider.id;
+
+      // Try to get provider-specific equipment first
+      try {
+        const res = await axios.get(`${baseUrl}/providers/${providerId}/equipment`);
+        setEquipmentList(res.data.data || res.data);
+      } catch (providerErr) {
+        // Fallback: get all equipment and filter by providerId
+        const res = await axios.get(`${baseUrl}/equipments`);
+        const filtered = res.data.filter(item =>
+          item.providerId === providerId ||
+          item.providerId === providerId.toString()
+        );
+        setEquipmentList(filtered);
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+    }
+  }, [provider]);
 
   useEffect(() => {
     const logged = localStorage.getItem('loggedUser');
@@ -26,35 +51,7 @@ export default function PHome() {
     if (provider?.id) {
       fetchEquipment();
     }
-  }, [provider]);
-
-  const fetchEquipment = async () => {
-    try {
-      // Use backend API to get provider's equipment
-      const baseUrl = 'http://localhost:5000/api';
-      const providerId = provider.id;
-
-      // Try to get provider-specific equipment first
-      try {
-        const res = await axios.get(`${baseUrl}/providers/${providerId}/equipment`);
-        setEquipmentList(res.data.data || res.data);
-      } catch (providerErr) {
-        // Fallback: get all equipment and filter by providerId
-        console.log('Provider endpoint not available, using fallback...');
-        const res = await axios.get(`${baseUrl}/equipments`);
-        const filtered = res.data.filter(item =>
-          item.providerId === providerId ||
-          item.providerId === providerId.toString()
-        );
-        setEquipmentList(filtered);
-      }
-
-      setIsLoading(false);
-    } catch (err) {
-      console.error("Error fetching equipment:", err);
-      setIsLoading(false);
-    }
-  };
+  }, [provider, fetchEquipment]);
 
   if (!provider) return null;
 

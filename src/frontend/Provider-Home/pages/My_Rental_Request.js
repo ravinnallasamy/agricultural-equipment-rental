@@ -55,7 +55,6 @@ export default function MyRentalRequest() {
 
       setRequests(filtered);
     } catch (err) {
-      console.error("Failed to fetch data:", err);
     } finally {
       setIsLoading(false);
     }
@@ -67,18 +66,12 @@ export default function MyRentalRequest() {
     }
   }, [providerId, fetchData]);
 
-
-
   const updateStatus = async (id, newStatus) => {
     try {
-      console.log("Updating request ID:", id, "to status:", newStatus);
-
       // First, test if we can GET the request
       try {
         const getResponse = await axios.get(API_CONFIG.getRequestUrl(id));
-        console.log("GET request successful:", getResponse.data);
       } catch (getError) {
-        console.error("GET request failed:", getError);
         alert(`Cannot find request ${id}. Please check if backend is running.`);
         return;
       }
@@ -94,7 +87,6 @@ export default function MyRentalRequest() {
 
       // Use the correct status update endpoint
       const statusUpdateUrl = `${API_CONFIG.getRequestUrl(id)}/status`;
-      console.log("Attempting to update request with URL:", statusUpdateUrl);
       await axios.patch(statusUpdateUrl, updateData);
 
       // Step 2: Find the request to get equipment ID
@@ -130,10 +122,7 @@ export default function MyRentalRequest() {
         alert("Request rejected successfully! Equipment is now available for other customers.");
       }
 
-
     } catch (err) {
-      console.error("Failed to update status", err);
-      console.error("Error details:", err.response?.data);
       alert(`Failed to update request status: ${err.response?.data?.message || err.message}`);
     }
   };

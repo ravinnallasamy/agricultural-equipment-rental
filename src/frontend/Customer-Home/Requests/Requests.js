@@ -24,7 +24,6 @@ export default function Requests() {
 
   const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,7 +33,6 @@ export default function Requests() {
         setFiltered(availableEquipments);
         setIsLoading(false);
       } catch (err) {
-        console.error("Failed to fetch data:", err);
         setIsLoading(false);
       }
     };
@@ -72,36 +70,16 @@ export default function Requests() {
         const storedUser = localStorage.getItem('loggedUser');
         if (storedUser) {
           currentUser = JSON.parse(storedUser);
-          console.log('Using stored user data:', currentUser);
         }
       } catch (e) {
-        console.error('Error parsing stored user:', e);
       }
     }
-
-    console.log('User data for request:', currentUser);
-    console.log('Equipment data:', equipment);
-
     // Get user ID consistently
     const userId = currentUser?._id || currentUser?.id;
-    console.log('Using user ID for request:', userId);
-
     if (!userId) {
       alert("Please log in to submit a request. User ID not found.");
       return;
     }
-
-    const requestData = {
-      customerId: userId,
-      customerName: currentUser.name,
-      customerEmail: currentUser.email,
-      customerMobile: currentUser.phone || currentUser.mobile,
-      equipmentId: equipment.id,
-      equipmentName: equipment.name,
-      providerId: equipment.providerId,
-      requestedAt: new Date().toISOString(),
-      status: "pending"
-    };
 
     try {
       // Create request object for backend
@@ -126,17 +104,10 @@ export default function Requests() {
         operatorRequired: false,
         specialRequirements: ''
       };
-
-      console.log('Request payload:', requestPayload);
-
       const response = await axios.post(API_CONFIG.getRequestUrl(), requestPayload);
-      console.log('Request submitted successfully:', response.data);
       alert("Request submitted successfully!");
       navigate(`/user/My-Request`);
     } catch (err) {
-      console.error("Error submitting request:", err);
-      console.error("Error details:", err.response?.data);
-
       const errorMessage = err.response?.data?.message ||
                           err.response?.data?.error ||
                           "Failed to submit request. Please try again.";

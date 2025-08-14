@@ -16,13 +16,11 @@ export default function MyRequest() {
   const [isLoading, setIsLoading] = useState(true);
   const [providers, setProviders] = useState({});
 
-  const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     const fetchData = async () => {
       // Prevent infinite fetching
       if (!user?.id && !user?._id) {
-        console.log('No user ID available, skipping fetch');
         setIsLoading(false);
         return;
       }
@@ -30,15 +28,9 @@ export default function MyRequest() {
       try {
         const requestsRes = await axios.get(API_CONFIG.getRequestUrl());
         const customerId = user?.id || user?._id;
-
-        console.log('Current user ID:', customerId);
-        console.log('Total requests found:', requestsRes.data.length);
-
         // Debug each request to see the customerId format
         requestsRes.data.forEach((req, index) => {
-          console.log(`Request ${index}: customerId="${req.customerId}" (type: ${typeof req.customerId})`);
           if (req.customerId && typeof req.customerId === 'object') {
-            console.log(`Request ${index}: customerId._id="${req.customerId._id}"`);
           }
         });
 
@@ -57,18 +49,13 @@ export default function MyRequest() {
           const match = reqCustomerId === userCustomerId;
 
           if (match) {
-            console.log(`✅ MATCH: Request customerId="${reqCustomerId}" === User ID="${userCustomerId}"`);
           }
 
           return match;
         });
-
-        console.log('My requests found:', customerRequests.length);
-        console.log('My requests:', customerRequests);
         setMyRequests(customerRequests);
         setProviders({});
       } catch (err) {
-        console.error("Error fetching data:", err);
       } finally {
         setIsLoading(false);
       }
@@ -80,21 +67,17 @@ export default function MyRequest() {
     } else {
       setIsLoading(false);
     }
-  }, [user?.id, user?._id]); // Only depend on user ID, not entire user object
+  }, []); // Remove dependencies to prevent infinite re-renders
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this request?")) {
       // Use backend API URL instead of frontend port
       const deleteUrl = `http://localhost:5000/api/requests/${id}`;
-      console.log('Deleting request:', deleteUrl);
-
       axios.delete(deleteUrl)
         .then(() => {
-          console.log('Request deleted successfully');
           setMyRequests(prev => prev.filter(req => req._id !== id && req.id !== id));
         })
         .catch(err => {
-          console.error("Delete failed:", err);
           alert("Failed to delete request. Please try again.");
         });
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import '../../Designs/Activation.css';
 
@@ -9,6 +9,14 @@ const ActivationSuccess = () => {
 
   const email = searchParams.get('email');
   const userType = searchParams.get('userType');
+
+  const handleSignInRedirect = useCallback(() => {
+    if (userType) {
+      navigate(`/signin/${userType}`);
+    } else {
+      navigate('/signin/user');
+    }
+  }, [userType, navigate]);
 
   useEffect(() => {
     // Countdown timer for auto-redirect
@@ -24,15 +32,7 @@ const ActivationSuccess = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
-
-  const handleSignInRedirect = () => {
-    if (userType) {
-      navigate(`/signin/${userType}`);
-    } else {
-      navigate('/signin/user');
-    }
-  };
+  }, [handleSignInRedirect]);
 
   const handleHomeRedirect = () => {
     navigate('/');

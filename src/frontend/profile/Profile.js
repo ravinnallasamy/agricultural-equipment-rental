@@ -22,7 +22,6 @@ export default function Profile() {
       const userData = JSON.parse(loggedUser || '{}');
       return loggedUser !== null && userData.id && userType;
     } catch (e) {
-      console.error('Error parsing user data:', e);
       return false;
     }
   };
@@ -35,11 +34,6 @@ export default function Profile() {
 
         // Check authentication using localStorage
         if (!isAuthenticated()) {
-          console.log('Redirecting to login - not authenticated');
-          console.log('Auth check failed - localStorage data:', {
-            loggedUser: localStorage.getItem('loggedUser'),
-            userType: localStorage.getItem('userType')
-          });
           navigate('/signin/user');
           return;
         }
@@ -68,7 +62,6 @@ export default function Profile() {
               currentUser = response.data;
             }
           } catch (fetchErr) {
-            console.log("User not found in backend:", fetchErr);
           }
 
           if (currentUser) {
@@ -84,8 +77,6 @@ export default function Profile() {
               businessType: currentUser.businessType || '',
               licenseNumber: currentUser.licenseNumber || ''
             };
-
-            console.log('Initial form data:', formData);
             setForm(formData);
 
             // Update localStorage with fresh data
@@ -104,13 +95,11 @@ export default function Profile() {
             setForm(userData);
           }
         } catch (err) {
-          console.error("Error fetching from json-server, using localStorage:", err);
           // Fallback to localStorage data if json-server is not available
           setUser(userData);
           setForm(userData);
         }
       } catch (err) {
-        console.error("Error loading profile:", err);
         setError("Failed to load profile. Please try again.");
       } finally {
         setIsLoading(false);
@@ -132,15 +121,7 @@ export default function Profile() {
     try {
       const userData = JSON.parse(localStorage.getItem('loggedUser') || '{}');
       const userType = localStorage.getItem('userType') || 'user';
-
-      console.log('Verifying password for:', { email: userData.email, userType });
-
       if (!userData.email || !password || !userType) {
-        console.error('Missing data for password verification:', {
-          hasEmail: !!userData.email,
-          hasPassword: !!password,
-          hasUserType: !!userType
-        });
         return false;
       }
 
@@ -154,8 +135,6 @@ export default function Profile() {
 
       return response.data.success && response.data.isValid;
     } catch (err) {
-      console.error('Password verification error:', err);
-      console.error('Error details:', err.response?.data);
       return false;
     }
   };
@@ -185,11 +164,6 @@ export default function Profile() {
 
       // Get the correct user ID - use multiple sources
       const userId = user?._id || user?.id || userData._id || userData.id;
-
-      console.log('Profile update - User ID:', userId);
-      console.log('Profile update - User object:', user);
-      console.log('Profile update - UserData from localStorage:', userData);
-
       if (!userId) {
         alert("User ID not found. Please log in again.");
         navigate('/signin/user');
@@ -214,13 +188,8 @@ export default function Profile() {
 
         if (response.data && response.data.success) {
           updateSuccess = true;
-
-          console.log('Backend response:', response.data);
-
           // Access the actual user data from response.data.data
           const userData = response.data.data;
-          console.log('Actual user data:', userData);
-
           // Update localStorage with new data - preserve the original user ID
           const updatedUserData = {
             id: userId, // Use the same userId we used for the update
@@ -231,9 +200,6 @@ export default function Profile() {
             address: userData.address,
             userType: userData.userType || userType
           };
-
-          console.log('Updating localStorage with:', updatedUserData);
-
           // Add business fields for providers
           if (userType === 'provider') {
             updatedUserData.businessName = userData.businessName;
@@ -245,8 +211,6 @@ export default function Profile() {
 
           // Verify localStorage was updated correctly
           const verifyStorage = localStorage.getItem('loggedUser');
-          console.log('Verified localStorage after update:', verifyStorage);
-
           // Update both user state and form state immediately
           setUser(userData); // Use userData instead of response.data
 
@@ -260,12 +224,9 @@ export default function Profile() {
             businessType: userData.businessType || '',
             licenseNumber: userData.licenseNumber || ''
           };
-
-          console.log('Updating form with:', newFormData);
           setForm(newFormData);
         }
       } catch (updateErr) {
-        console.error("Update failed:", updateErr);
         const errorMessage = updateErr.response?.data?.message || "Failed to update profile";
         alert(errorMessage);
       }
@@ -279,12 +240,10 @@ export default function Profile() {
         alert("Profile updated successfully!");
 
         // Simply refresh the form with the updated data - no additional fetch needed
-        console.log('Profile updated successfully, refreshing UI...');
       } else {
         alert("Failed to update profile in database. Please try again.");
       }
     } catch (err) {
-      console.error("Error updating profile:", err);
       alert("Failed to update profile. Try again.");
     }
   };
@@ -344,13 +303,9 @@ export default function Profile() {
   const storageUserType = localStorage.getItem('userType');
   const userType = storageUserType || urlUserType || 'user';
 
-
-
   const profileTitle = userType === 'provider'
     ? 'Provider Profile'
     : 'User Profile';
-
-
 
   return (
     <div className="profile-page">
