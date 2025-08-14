@@ -104,7 +104,7 @@ export default function Requests() {
         operatorRequired: false,
         specialRequirements: ''
       };
-      const response = await axios.post(API_CONFIG.getRequestUrl(), requestPayload);
+      await axios.post(API_CONFIG.getRequestUrl(), requestPayload);
       alert("Request submitted successfully!");
       navigate(`/user/My-Request`);
     } catch (err) {

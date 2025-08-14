@@ -209,8 +209,6 @@ export default function Profile() {
 
           localStorage.setItem('loggedUser', JSON.stringify(updatedUserData));
 
-          // Verify localStorage was updated correctly
-          const verifyStorage = localStorage.getItem('loggedUser');
           // Update both user state and form state immediately
           setUser(userData); // Use userData instead of response.data
 

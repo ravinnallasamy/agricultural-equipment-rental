@@ -70,7 +70,7 @@ export default function MyRentalRequest() {
     try {
       // First, test if we can GET the request
       try {
-        const getResponse = await axios.get(API_CONFIG.getRequestUrl(id));
+        await axios.get(API_CONFIG.getRequestUrl(id));
       } catch (getError) {
         alert(`Cannot find request ${id}. Please check if backend is running.`);
         return;
