@@ -71,9 +71,8 @@ export default function MyRequest() {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this request?")) {
-      // Use backend API URL instead of frontend port
-      const deleteUrl = `http://localhost:5000/api/requests/${id}`;
-      axios.delete(deleteUrl)
+      // Use API_CONFIG for proper environment handling
+      axios.delete(API_CONFIG.getRequestUrl(id))
         .then(() => {
           setMyRequests(prev => prev.filter(req => req._id !== id && req.id !== id));
         })
