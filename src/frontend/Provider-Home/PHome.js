@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../config/api';
 import '../../Designs/PHome.css';
-import logo from '../../Assets/Logo.png';
-import { FiHome, FiUser, FiLogOut } from 'react-icons/fi';
+import ProviderHero from './components/ProviderHero';
 import { FaClipboardList, FaPlusCircle, FaTractor } from 'react-icons/fa';
 
 export default function PHome() {
@@ -54,48 +53,8 @@ export default function PHome() {
 
   return (
     <div className="provider-home-page">
-      {/* Fixed Hero Section */}
-      <header className="provider-hero">
-        <div className="hero-content">
-          <div className="hero-logo">
-            <img src={logo} alt="Logo" className="provider-logo" />
-          </div>
-          
-          <div className="hero-info">
-            <h1 className="welcome-title">Welcome, {provider.name}</h1>
-            <div className="location-badge">
-              <p>
-                {provider.address && typeof provider.address === 'object'
-                  ? `${provider.address.city || ''}, ${provider.address.state || ''}`.replace(/^,\s*|,\s*$|,\s*,/g, ',').replace(/^,\s*/, '').replace(/,\s*$/, '') || "Location not specified"
-                  : provider.address || "Location not specified"
-                }
-              </p>
-            </div>
-          </div>
-          
-          <div className="hero-actions">
-            <button
-              className="profile-button"
-              onClick={() => {
-                const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-                const userType = localStorage.getItem('userType');
-                if (user && userType) {
-                  const id = user._id || user.id;
-                  navigate(`/profile/${userType}/${id}`);
-                }
-              }}
-            >
-              <FiUser /> Profile
-            </button>
-            <button
-              className="profile-button logout"
-              onClick={() => navigate('/logout')}
-            >
-              <FiLogOut /> Logout
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* Fixed Hero Section (shared) */}
+      <ProviderHero title={`Welcome, ${provider.name}`} />
 
       {/* Scrollable Content */}
       <main className="provider-content">

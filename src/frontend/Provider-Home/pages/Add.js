@@ -3,17 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
-import logo from '../../../Assets/Logo.png';
-import {
-  FiUser,
-  FiLogOut,
-  FiSave,
-  FiX,
-  FiHome
-} from 'react-icons/fi';
+import { FiSave, FiX } from 'react-icons/fi';
 import {
   FaPlus
 } from 'react-icons/fa';
+import ProviderHero from '../components/ProviderHero';
 
 export default function Add() {
   // Form state management - stores all equipment information entered by the provider
@@ -174,48 +168,9 @@ export default function Add() {
 
   return (
     <div className="provider-home-page">
-      <img src={logo} alt="Logo" className="provider-logo" />
+      <ProviderHero title="Add New Equipment" />
 
-      <div className="provider-header">
-        <h1 className="welcome-title">Add New Equipment</h1>
-        <div className="provider-info">
-          <div className="location-badge">
-            <p>Add Equipment:</p>
-            <FaPlus />
-            New Equipment
-          </div>
-
-          <div className="header-buttons">
-            <button
-              className="profile-button profile"
-              onClick={() => {
-                const userType = localStorage.getItem('userType') || 'provider';
-                navigate(`/profile/${userType}/${providerId}`);
-              }}
-            >
-              <FiUser /> Profile
-            </button>
-            <button
-              className="profile-button logout"
-              onClick={() => navigate('/logout')}
-            >
-              <FiLogOut /> Logout
-            </button>
-          </div>
-
-          {/* Fixed Home (FAB) */}
-          <button
-            className="provider-home-fab"
-            aria-label="Go to Provider Home"
-            title="Provider Home"
-            onClick={() => navigate('/provider-home')}
-          >
-            <FiHome />
-          </button>
-
-        </div>
-      </div>
-
+      <main className="provider-content">
       {/* Form Container */}
       <div className="catalog-container">
         <div className="catalog-header">
@@ -331,9 +286,10 @@ export default function Add() {
               </button>
 
               <button
+      </main>
                 type="button"
                 className="action-button info"
-                onClick={() => navigate(`/provider/my-catalog/${providerId}`)}
+                onClick={() => navigate('/provider-home')}
               >
                 <FiX /> Cancel
               </button>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
 import logo from '../../../Assets/Logo.png';
+import ProviderHero from '../components/ProviderHero';
 import { FiUser, FiLogOut, FiCheckCircle, FiX, FiHome } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
 
@@ -129,11 +130,9 @@ export default function MyRentalRequest() {
 
   return (
     <div className="provider-home-page">
-      <img src={logo} alt="Logo" className="provider-logo" />
+      <ProviderHero title="My Rental Requests" />
 
-      <div className="provider-header">
-        <h1 className="welcome-title">My Rental Requests</h1>
-        <div className="provider-info">
+      <main className="provider-content">
           <div className="location-badge">
             <p>Manage Requests:</p>
             <FaClipboardList />
@@ -248,4 +247,5 @@ export default function MyRentalRequest() {
       </div>
     </div>
   );
+      </main>
 }

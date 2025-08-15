@@ -4,6 +4,7 @@ import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
 import '../../../Designs/MyCatalog.css';
+import ProviderHero from '../components/ProviderHero';
 import logo from '../../../Assets/Logo.png';
 import {
   FiUser,
@@ -160,11 +161,9 @@ export default function MyCatalog() {
 
   return (
     <div className="provider-home-page">
-      <img src={logo} alt="Logo" className="provider-logo" />
+      <ProviderHero title="My Equipment Catalog" />
 
-      <div className="provider-header">
-        <h1 className="welcome-title">My Equipment Catalog</h1>
-        <div className="provider-info">
+      <main className="provider-content">
           <div className="location-badge">
             <p>My Equipment:</p>
 
