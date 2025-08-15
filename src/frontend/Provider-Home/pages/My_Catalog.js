@@ -236,26 +236,45 @@ export default function MyCatalog() {
         {editItem && (
           <div className="modal-overlay" role="dialog" aria-modal="true">
             <div className="modal">
-              <h3>Edit Equipment</h3>
-              <label>Name
-                <input className="edit-form-input" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
-              </label>
-              <label>Category
-                <input className="edit-form-input" value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
-              </label>
-              <label>Type
-                <input className="edit-form-input" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })} />
-              </label>
-              <label>Price (₹/hr)
-                <input className="edit-form-input" type="number" min="0" step="0.01" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
-              </label>
-              <label>Address
-                <input className="edit-form-input" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
-              </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
-                Available
-              </label>
+              <div className="modal-header">
+                <h3 className="modal-title">Edit Equipment</h3>
+                <button className="modal-close" aria-label="Close" onClick={closeEdit}>×</button>
+              </div>
+              <div className="modal-body">
+                <div className="form-row">
+                  <div className="form-field">
+                    <label>Name</label>
+                    <input className="form-input" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+                  </div>
+                  <div className="form-field">
+                    <label>Category</label>
+                    <input className="form-input" value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-field">
+                    <label>Type</label>
+                    <input className="form-input" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })} />
+                  </div>
+                  <div className="form-field">
+                    <label>Price (₹/hr)</label>
+                    <input className="form-input" type="number" min="0" step="0.01" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-field" style={{ gridColumn: '1 / -1' }}>
+                    <label>Address</label>
+                    <input className="form-input" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
+                  </div>
+                </div>
+                <div className="toggle-field">
+                  <label className="switch">
+                    <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
+                    <span className="slider"></span>
+                  </label>
+                  <span>Available</span>
+                </div>
+              </div>
               <div className="modal-actions">
                 <button className="action-button save-button" onClick={saveEdit}>Save</button>
                 <button className="action-button cancel-button" onClick={closeEdit}>Cancel</button>
