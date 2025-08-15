@@ -13,6 +13,16 @@ export default function ResetPassword() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const decodeUserType = (t) => {
+    try {
+      const payload = JSON.parse(atob(t.split('.')[1]));
+      if (payload && (payload.userType === 'user' || payload.userType === 'provider')) {
+        return payload.userType;
+      }
+    } catch (_) {}
+    return 'user';
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password.length < 6) {
@@ -32,9 +42,8 @@ export default function ResetPassword() {
       });
       if (res.status === 200) {
         setSuccess(true);
-        // Try to decode userType from token payload if backend ever needs it.
-        // For now, navigate to landing; user can pick their interface.
-        setTimeout(() => navigate('/signin/user'), 2000);
+        const ut = decodeUserType(token);
+        setTimeout(() => navigate(`/signin/${ut}`), 1500);
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Reset link is invalid or expired');
