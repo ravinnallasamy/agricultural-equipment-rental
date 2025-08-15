@@ -15,8 +15,8 @@
  * Purpose: Educational project demonstrating full-stack development
  */
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import LoginControl from './frontend/login/LoginControl';
 import UserLoginControl from './frontend/login/UserLoginControl';
 import SourceProviderLoginControl from './frontend/login/SourceProviderLoginControl';
@@ -36,6 +36,17 @@ import ActivationSuccess from './frontend/activation/ActivationSuccess';
 import ActivationPage from './frontend/activation/ActivationPage';
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get('activate');
+    if (token) {
+      navigate(`/activate/${token}`, { replace: true });
+    }
+  }, [location.search, navigate]);
+
   return (
     <Routes>
       {/* User Routes */}
