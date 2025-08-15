@@ -32,7 +32,9 @@ export default function ResetPassword() {
       });
       if (res.status === 200) {
         setSuccess(true);
-        setTimeout(() => navigate('/'), 2000);
+        // Try to decode userType from token payload if backend ever needs it.
+        // For now, navigate to landing; user can pick their interface.
+        setTimeout(() => navigate('/signin/user'), 2000);
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Reset link is invalid or expired');

@@ -50,7 +50,7 @@ export default function ForgotPassword() {
         ) : (
           <>
             <h2 className="login-title">Check your email</h2>
-            <p>We sent a reset link to {email}. If the email exists, you'll receive instructions shortly.</p>
+            <p>We sent a reset link to {email}. If the email exists, you'll receive instructions shortly. The link is valid for 1 day.</p>
           </>
         )}
       </div>
