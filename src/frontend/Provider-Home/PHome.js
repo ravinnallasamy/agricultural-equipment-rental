@@ -56,7 +56,7 @@ export default function PHome() {
   if (!provider) return null;
 
   return (
-    <div className="provider-home-page">
+    <div className="provider-theme provider-home-page">
       <img src={logo} alt="Logo" className="provider-logo" />
       
       <div className="provider-header">
