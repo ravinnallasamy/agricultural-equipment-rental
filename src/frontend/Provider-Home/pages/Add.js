@@ -174,7 +174,7 @@ export default function Add() {
   return (
     <div className="provider-home-page">
       <img src={logo} alt="Logo" className="provider-logo" />
-      
+
       <div className="provider-header">
         <h1 className="welcome-title">Add New Equipment</h1>
         <div className="provider-info">
@@ -201,6 +201,17 @@ export default function Add() {
               <FiLogOut /> Logout
             </button>
           </div>
+
+          {/* Fixed Home (FAB) */}
+          <button
+            className="provider-home-fab"
+            aria-label="Go to Provider Home"
+            title="Provider Home"
+            onClick={() => navigate('/provider-home')}
+          >
+            🏠
+          </button>
+
         </div>
       </div>
 
@@ -210,7 +221,7 @@ export default function Add() {
           <h2 className="catalog-title">Equipment Details</h2>
           <p className="form-subtitle">Fill in the details to add new equipment to your catalog</p>
         </div>
-        
+
         <div className="catalog-body">
           <form onSubmit={handleSubmit} className="equipment-form">
             <div className="form-grid">
@@ -317,7 +328,7 @@ export default function Add() {
                   </>
                 )}
               </button>
-              
+
               <button
                 type="button"
                 className="action-button info"

@@ -158,6 +158,17 @@ export default function MyRentalRequest() {
             </button>
           </div>
         </div>
+
+          {/* Fixed Home (FAB) */}
+          <button
+            className="provider-home-fab"
+            aria-label="Go to Provider Home"
+            title="Provider Home"
+            onClick={() => navigate('/provider-home')}
+          >
+            🏠
+          </button>
+
       </div>
 
       {/* Requests Container */}

@@ -166,6 +166,17 @@ export default function MyCatalog() {
         <div className="provider-info">
           <div className="location-badge">
             <p>My Equipment:</p>
+
+          {/* Fixed Home (FAB) */}
+          <button
+            className="provider-home-fab"
+            aria-label="Go to Provider Home"
+            title="Provider Home"
+            onClick={() => navigate('/provider-home')}
+          >
+            🏠
+          </button>
+
             <FaBoxes />
             {equipmentList.length} Items
           </div>
