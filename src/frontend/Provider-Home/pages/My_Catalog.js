@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,11 +10,15 @@ import {
   FiLogOut,
   FiEdit,
   FiTrash2,
-  FiPlusCircle
+  FiPlusCircle,
+  FiX,
+  FiCheck,
+  FiDollarSign,
+  FiMapPin,
+  FiTag,
+  FiLayers
 } from 'react-icons/fi';
-import {
-  FaBoxes
-} from 'react-icons/fa';
+import { FaBoxes } from 'react-icons/fa';
 
 export default function MyCatalog() {
   const [equipmentList, setEquipmentList] = useState([]);
@@ -35,7 +38,6 @@ export default function MyCatalog() {
 
   const fetchEquipment = useCallback(async () => {
     try {
-      // Use provider-specific equipment endpoint
       const response = await axios.get(API_CONFIG.getProviderEquipmentUrl(providerId));
       setEquipmentList(response.data.data || response.data);
       setIsLoading(false);
@@ -55,7 +57,7 @@ export default function MyCatalog() {
       try {
         await axios.delete(API_CONFIG.getEquipmentUrl(equipmentId));
         alert("Equipment deleted successfully!");
-        fetchEquipment(); // Refresh the list
+        fetchEquipment();
       } catch (err) {
         const errorMessage = err.response?.data?.message || "Failed to delete equipment. Please try again.";
         alert(errorMessage);
@@ -64,7 +66,14 @@ export default function MyCatalog() {
   };
 
   const [editItemId, setEditItemId] = useState(null);
-  const [editForm, setEditForm] = useState({ name: '', category: '', type: '', price: '', address: '', available: true });
+  const [editForm, setEditForm] = useState({ 
+    name: '', 
+    category: '', 
+    type: '', 
+    price: '', 
+    address: '', 
+    available: true 
+  });
 
   const openEdit = (item) => {
     setEditItemId(item.id);
@@ -104,7 +113,7 @@ export default function MyCatalog() {
         available: !currentStatus
       });
       alert(`Equipment ${!currentStatus ? 'made available' : 'made unavailable'} successfully!`);
-      fetchEquipment(); // Refresh the list
+      fetchEquipment();
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Failed to update equipment status. Please try again.";
       alert(errorMessage);
@@ -175,113 +184,169 @@ export default function MyCatalog() {
           <div className="catalog-body">
             <div className="equipment-grid">
               {equipmentList.map((item, index) => (
-                <div key={index} className={`equipment-card ${editItemId === item.id ? 'card-editable' : ''}`}>
+                <div key={index} className={`equipment-card ${editItemId === item.id ? 'card-editing' : ''}`}>
                   <div className="equipment-header">
                     {editItemId === item.id ? (
-                      <input
-                        className="card-edit-input"
-                        value={editForm.name}
-                        onChange={e => setEditForm({ ...editForm, name: e.target.value })}
-                        placeholder="Name"
-                      />
+                      <div className="edit-title-container">
+                        <h3 className="editing-title">Editing Equipment</h3>
+                        <div className="edit-actions">
+                          <button className="action-btn save" onClick={saveEdit} title="Save">
+                            <FiCheck />
+                          </button>
+                          <button className="action-btn cancel" onClick={closeEdit} title="Cancel">
+                            <FiX />
+                          </button>
+                        </div>
+                      </div>
                     ) : (
-                      <h3 className="equipment-name">{item.name}</h3>
+                      <>
+                        <h3 className="equipment-name">{item.name}</h3>
+                        <span className={`availability-status ${item.available ? 'available' : 'unavailable'}`}>
+                          {item.available ? '🟢 Available' : '🔴 Rented Out'}
+                        </span>
+                      </>
                     )}
 
-                    <span className={`availability-status ${item.available ? 'available' : 'unavailable'}`}>
-                      {item.available ? '🟢 Available' : '🔴 Rented Out'}
-                    </span>
-
-                    <div className="equipment-actions">
-                      {editItemId === item.id ? (
-                        <>
-                          <button className="action-btn edit" onClick={saveEdit} title="Save">💾</button>
-                          <button className="action-btn delete" onClick={closeEdit} title="Cancel">✖</button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            className="action-btn edit"
-                            onClick={() => handleEdit(item)}
-                            title="Edit Equipment"
-                          >
-                            <FiEdit />
-                          </button>
-                          <button
-                            className="action-btn delete"
-                            onClick={() => handleDelete(item.id)}
-                            title="Delete Equipment"
-                          >
-                            <FiTrash2 />
-                          </button>
-                        </>
-                      )}
-                    </div>
+                    {editItemId !== item.id && (
+                      <div className="equipment-actions">
+                        <button
+                          className="action-btn edit"
+                          onClick={() => handleEdit(item)}
+                          title="Edit Equipment"
+                        >
+                          <FiEdit />
+                        </button>
+                        <button
+                          className="action-btn delete"
+                          onClick={() => handleDelete(item.id)}
+                          title="Delete Equipment"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   {editItemId === item.id ? (
-                    <>
-                      <div className="card-edit-row">
-                        <div className="card-edit-field">
-                          <label>Type</label>
-                          <input className="card-edit-input" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })} />
-                        </div>
-                        <div className="card-edit-field">
-                          <label>Category</label>
-                          <input className="card-edit-input" value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
-                        </div>
-                      </div>
-                      <div className="card-edit-row">
-                        <div className="card-edit-field">
-                          <label>Price (₹/hr)</label>
-                          <input className="card-edit-input" type="number" min="0" step="0.01" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
-                        </div>
-                        <div className="card-edit-field">
-                          <label>Location</label>
-                          <input className="card-edit-input" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
-                        </div>
-                      </div>
-                      <div className="toggle-field">
-                        <label className="switch">
-                          <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
-                          <span className="slider" />
+                    <div className="edit-form-container">
+                      <div className="form-group">
+                        <label className="form-label">
+                          <FiTag className="input-icon" />
+                          Equipment Name
                         </label>
-                        <span>Available</span>
+                        <input
+                          className="form-input"
+                          value={editForm.name}
+                          onChange={e => setEditForm({ ...editForm, name: e.target.value })}
+                          placeholder="Enter equipment name"
+                        />
                       </div>
 
-                      <div className="card-edit-actions">
-                        <button className="action-button save-button" onClick={saveEdit}>Save</button>
-                        <button className="action-button cancel-button" onClick={closeEdit}>Cancel</button>
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label className="form-label">
+                            <FiLayers className="input-icon" />
+                            Type
+                          </label>
+                          <input
+                            className="form-input"
+                            value={editForm.type}
+                            onChange={e => setEditForm({ ...editForm, type: e.target.value })}
+                            placeholder="Enter type"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label">
+                            <FiLayers className="input-icon" />
+                            Category
+                          </label>
+                          <input
+                            className="form-input"
+                            value={editForm.category}
+                            onChange={e => setEditForm({ ...editForm, category: e.target.value })}
+                            placeholder="Enter category"
+                          />
+                        </div>
                       </div>
-                    </>
+
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label className="form-label">
+                            <FiDollarSign className="input-icon" />
+                            Price (₹/hr)
+                          </label>
+                          <input
+                            className="form-input"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={editForm.price}
+                            onChange={e => setEditForm({ ...editForm, price: e.target.value })}
+                            placeholder="Enter price"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label">
+                            <FiMapPin className="input-icon" />
+                            Location
+                          </label>
+                          <input
+                            className="form-input"
+                            value={editForm.address}
+                            onChange={e => setEditForm({ ...editForm, address: e.target.value })}
+                            placeholder="Enter location"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-group availability-toggle">
+                        <label className="toggle-label">
+                          <span className="toggle-text">Availability</span>
+                          <label className="switch">
+                            <input
+                              type="checkbox"
+                              checked={editForm.available}
+                              onChange={e => setEditForm({ ...editForm, available: e.target.checked })}
+                            />
+                            <span className="slider round" />
+                          </label>
+                          <span className={`status-text ${editForm.available ? 'available' : 'unavailable'}`}>
+                            {editForm.available ? 'Available' : 'Unavailable'}
+                          </span>
+                        </label>
+                      </div>
+                    </div>
                   ) : (
                     <>
-                      <p className="equipment-detail">
-                        <strong>Type:</strong> {item.type}
-                      </p>
-                      <p className="equipment-detail">
-                        <strong>Category:</strong> {item.category}
-                      </p>
-                      <p className="equipment-detail">
-                        <strong>Price/hr:</strong> ₹{item.price}
-                      </p>
-                      <p className="equipment-detail">
-                        <strong>Location:</strong> {item.address || 'Not specified'}
-                      </p>
-                      <p className="equipment-detail">
-                        <strong>Status:</strong>{' '}
-                        <span className={`status-badge ${item.available ? 'available' : 'unavailable'}`}>
-                          {item.available ? 'Available' : 'Unavailable'}
-                        </span>
-                      </p>
+                      <div className="equipment-details">
+                        <div className="detail-row">
+                          <FiLayers className="detail-icon" />
+                          <span className="detail-label">Type:</span>
+                          <span className="detail-value">{item.type}</span>
+                        </div>
+                        <div className="detail-row">
+                          <FiLayers className="detail-icon" />
+                          <span className="detail-label">Category:</span>
+                          <span className="detail-value">{item.category}</span>
+                        </div>
+                        <div className="detail-row">
+                          <FiDollarSign className="detail-icon" />
+                          <span className="detail-label">Price/hr:</span>
+                          <span className="detail-value">₹{item.price}</span>
+                        </div>
+                        <div className="detail-row">
+                          <FiMapPin className="detail-icon" />
+                          <span className="detail-label">Location:</span>
+                          <span className="detail-value">{item.address || 'Not specified'}</span>
+                        </div>
+                      </div>
 
-                      <div className="equipment-actions-bottom">
+                      <div className="equipment-footer">
                         <button
-                          className={`action-button ${item.available ? 'info' : 'primary'}`}
+                          className={`availability-toggle-btn ${item.available ? 'make-unavailable' : 'make-available'}`}
                           onClick={() => toggleAvailability(item.id, item.available)}
-                          style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
                         >
-                          {item.available ? 'Make Unavailable' : 'Make Available'}
+                          {item.available ? 'Mark as Unavailable' : 'Mark as Available'}
                         </button>
                       </div>
                     </>
@@ -291,10 +356,7 @@ export default function MyCatalog() {
             </div>
           </div>
         )}
-
-        {/* Inline modal removed: editing happens directly on the card */}
       </div>
     </div>
   );
 }
-

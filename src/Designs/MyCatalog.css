@@ -1,277 +1,388 @@
-.my-catalog {
-  padding: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* MyCatalog.css - Enhanced Edit Design */
 
-.catalog-header {
-  color: #2c3e50;
-  margin-bottom: 30px;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 10px;
-}
-
-.no-equipment {
-  color: #7f8c8d;
-  font-size: 16px;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.equipment-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
+/* Base Card Styles */
 .equipment-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  border: 1px solid #e0e3e7;
+  border-radius: 12px;
   padding: 20px;
   background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .equipment-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Editing State */
+.card-editing {
+  border: 2px solid #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  background-color: #f8fafc;
+}
+
+/* Header Styles */
+.equipment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  position: relative;
 }
 
 .equipment-name {
-  color: #2c3e50;
-  margin-top: 0;
-  margin-bottom: 15px;
+  color: #1e293b;
+  margin: 0;
   font-size: 18px;
+  font-weight: 600;
+  flex: 1;
 }
 
-.equipment-detail {
-  margin: 8px 0;
-  color: #34495e;
-  font-size: 14px;
+.editing-title {
+  color: #4f46e5;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
 }
 
-.equipment-detail strong {
-  color: #2c3e50;
-}
-
-.edit-form-input {
+.edit-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 8px;
-  margin: 5px 0 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
 }
 
-.edit-form-select {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: white;
-  cursor: pointer;
-  font-size: 14px;
+/* Availability Status */
+.availability-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-left: 10px;
 }
 
-.action-button {
-  padding: 8px 16px;
+.available {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.unavailable {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+/* Action Buttons */
+.equipment-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
   border: none;
-  border-radius: 4px;
+  background: transparent;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  margin-right: 10px;
-}
-
-.save-button {
-  background-color: #27ae60;
-  color: white;
-}
-
-.save-button:hover {
-  background-color: #219653;
-}
-
-.cancel-button {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.cancel-button:hover {
-  background-color: #c0392b;
-}
-
-.edit-button {
-  background-color: #3498db;
-  color: white;
-}
-
-.edit-button:hover {
-  background-color: #2980b9;
-}
-
-.delete-button {
-  margin-top: 1%;
-  background-color: #e74c3c;
-  color: white;
-}
-
-.delete-button:hover {
-  background-color: #c0392b;
-}
-
-/* Modal styles */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  z-index: 1000;
+  transition: all 0.2s ease;
 }
-.modal {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  width: min(520px, 96vw);
-  max-height: 90svh;
-  overflow: auto;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-.modal h3 {
-  margin: 0 0 0.75rem 0;
-  font-size: 1.25rem;
-}
-.edit-form-input {
-  width: 100%;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin: 0.25rem 0 0.85rem 0;
-  font-size: 0.95rem;
-  box-sizing: border-box;
-}
-.modal-actions {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-.save-button {
-  background-color: #27ae60;
-  color: #fff;
-}
-.save-button:hover { background-color: #219653; }
-.cancel-button { background-color: #e0e0e0; color: #333; }
-.cancel-button:hover { background-color: #d5d5d5; }
 
-@media (max-width: 480px) {
-  .modal {
-    width: 96vw;
-    padding: 1rem;
-    max-height: 92svh;
-  }
-  .modal-actions {
-    justify-content: stretch;
-  }
-  .modal-actions .action-button {
-    width: 100%;
-  }
+.action-btn.edit {
+  color: #4f46e5;
+  background-color: #eef2ff;
 }
-/* --- Enhanced Edit Modal UI --- */
-.modal-header {
+
+.action-btn.edit:hover {
+  background-color: #e0e7ff;
+}
+
+.action-btn.delete {
+  color: #dc2626;
+  background-color: #fee2e2;
+}
+
+.action-btn.delete:hover {
+  background-color: #fecaca;
+}
+
+.action-btn.save {
+  color: #059669;
+  background-color: #ecfdf5;
+}
+
+.action-btn.save:hover {
+  background-color: #d1fae5;
+}
+
+.action-btn.cancel {
+  color: #64748b;
+  background-color: #f1f5f9;
+}
+
+.action-btn.cancel:hover {
+  background-color: #e2e8f0;
+}
+
+/* Edit Form Styles */
+.edit-form-container {
+  margin-top: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-label {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-.modal-title {
-  margin: 0;
-  font-size: 1.25rem;
+  font-size: 13px;
   font-weight: 600;
-  color: #2c3e50;
-}
-.modal-close {
-  background: transparent;
-  border: none;
-  font-size: 1.25rem;
-  line-height: 1;
-/* Inline Edit Styles for Equipment Card */
-.card-editable {
-  border: 2px solid #3498db;
-  box-shadow: 0 6px 16px rgba(52,152,219,0.15);
-}
-.card-edit-row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-.card-edit-field label { display:block; font-weight:600; margin-bottom:6px; color:#2c3e50; }
-.card-edit-input { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; }
-.card-edit-input:focus { outline:none; border-color:#3498db; box-shadow:0 0 0 3px rgba(52,152,219,0.12); }
-.card-edit-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:10px; flex-wrap:wrap; }
-
-  cursor: pointer;
-  color: #7f8c8d;
-}
-.modal-close:hover { color: #2c3e50; }
-
-.modal-body {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 0.5rem;
-}
-.form-row {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-.form-field label {
-  display: block;
-  font-weight: 600;
+  color: #64748b;
   margin-bottom: 6px;
-  color: #2c3e50;
 }
+
+.input-icon {
+  margin-right: 8px;
+  color: #94a3b8;
+}
+
 .form-input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
+  padding: 10px 12px 10px 38px;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 14px;
-  box-sizing: border-box;
-}
-.form-input:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52,152,219,0.12);
+  color: #1e293b;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+  position: relative;
 }
 
-.toggle-field { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.form-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+  background-color: white;
+}
+
+/* Availability Toggle */
+.availability-toggle {
+  margin-top: 10px;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-right: 12px;
+}
+
+.status-text {
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.status-text.available {
+  color: #059669;
+}
+
+/* Polished Inline Edit Card Design */
+.card-editing {
+  border: 2px solid #3498db;
+  box-shadow: 0 10px 24px rgba(52, 152, 219, 0.15);
+}
+.edit-title-container { display:flex; align-items:center; justify-content:space-between; width:100%; }
+.editing-title { margin:0; color:#2c3e50; font-size:1.1rem; font-weight:700; }
+.edit-actions { display:flex; gap:8px; }
+.action-btn.save { color:#27ae60; }
+.action-btn.cancel { color:#e74c3c; }
+
+.edit-form-container { display:grid; gap:16px; margin-top:8px; }
+.form-label { font-weight:600; color:#2c3e50; display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.input-icon { color:#3498db; }
+.form-input { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; }
+.form-input:focus { outline:none; border-color:#3498db; box-shadow:0 0 0 3px rgba(52,152,219,0.12); }
+.form-row { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+.equipment-details { display:grid; gap:8px; margin-top:8px; }
+.detail-row { display:flex; align-items:center; gap:8px; color:#34495e; }
+.detail-icon { color:#6c7a89; }
+.detail-label { font-weight:600; }
+.detail-value { color:#2c3e50; }
+
+/* Availability switch inside card */
+.availability-toggle { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.toggle-label { display:flex; align-items:center; gap:12px; width:100%; }
+.toggle-text { font-weight:600; color:#2c3e50; }
 .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; inset: 0; background: #ddd; transition: .2s; border-radius: 999px; }
 .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; top: 3px; background: white; transition: .2s; border-radius: 50%; }
 .switch input:checked + .slider { background: #27ae60; }
 .switch input:checked + .slider:before { transform: translateX(20px); }
+.status-text { font-weight:600; }
+.status-text.available { color:#27ae60; }
+.status-text.unavailable { color:#e74c3c; }
 
+.equipment-footer { display:flex; justify-content:flex-end; margin-top:12px; }
+.availability-toggle-btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight:600; }
+.availability-toggle-btn.make-available { background:#27ae60; color:#fff; }
+.availability-toggle-btn.make-unavailable { background:#e67e22; color:#fff; }
 
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .equipment-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
+.status-text.unavailable {
+  color: #dc2626;
 }
 
-@media (max-width: 480px) {
-  .my-catalog {
-    padding: 20px 15px;
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e2e8f0;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4f46e5;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Equipment Details */
+.equipment-details {
+  margin: 15px 0;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.detail-icon {
+  margin-right: 10px;
+  color: #94a3b8;
+  min-width: 16px;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #64748b;
+  margin-right: 6px;
+}
+
+.detail-value {
+  color: #1e293b;
+}
+
+/* Footer Buttons */
+.equipment-footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.availability-toggle-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.make-available {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.make-available:hover {
+  background-color: #d1fae5;
+}
+
+.make-unavailable {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.make-unavailable:hover {
+  background-color: #fecaca;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
   }
 
-  .equipment-grid {
-    grid-template-columns: 1fr;
+  .equipment-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .availability-status {
+    margin-left: 0;
+    margin-top: 8px;
   }
 }
