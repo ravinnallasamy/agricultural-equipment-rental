@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Frontend application for Agricultural Equipment Rental Platform",
   "private": false,
-  "homepage": ".",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.4",
