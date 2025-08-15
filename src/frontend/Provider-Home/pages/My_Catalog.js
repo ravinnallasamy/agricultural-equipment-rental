@@ -16,7 +16,8 @@ import {
   FiDollarSign,
   FiMapPin,
   FiTag,
-  FiLayers
+  FiLayers,
+  FiHome
 } from 'react-icons/fi';
 import { FaBoxes } from 'react-icons/fa';
 
@@ -174,7 +175,7 @@ export default function MyCatalog() {
             title="Provider Home"
             onClick={() => navigate('/provider-home')}
           >
-            🏠
+            <FiHome />
           </button>
 
             <FaBoxes />

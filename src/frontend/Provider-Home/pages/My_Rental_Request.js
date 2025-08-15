@@ -4,7 +4,7 @@ import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
 import logo from '../../../Assets/Logo.png';
-import { FiUser, FiLogOut, FiCheckCircle, FiX } from 'react-icons/fi';
+import { FiUser, FiLogOut, FiCheckCircle, FiX, FiHome } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
 
 export default function MyRentalRequest() {
@@ -166,7 +166,7 @@ export default function MyRentalRequest() {
             title="Provider Home"
             onClick={() => navigate('/provider-home')}
           >
-            🏠
+            <FiHome />
           </button>
 
       </div>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import API_CONFIG from '../../config/api';
 import '../../Designs/PHome.css';
 import logo from '../../Assets/Logo.png';
+import { FiHome } from 'react-icons/fi';
 
 export default function PHome() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function PHome() {
   return (
     <div className="provider-theme provider-home-page">
       <img src={logo} alt="Logo" className="provider-logo" />
-      
+
       <div className="provider-header">
         <h1 className="welcome-title">Welcome, {provider.name}</h1>
         <div className="provider-info">
@@ -131,7 +132,7 @@ export default function PHome() {
             <p className="no-equipment">No equipment found. Start by adding some equipment.</p>
           ) : null}
         </div>
-        
+
         {!isLoading && equipmentList.length > 0 && (
           <div className="catalog-body">
             <div className="equipment-grid">
@@ -148,7 +149,7 @@ export default function PHome() {
                     <i className="fas fa-rupee-sign"></i> <strong>Price/hr:</strong> ₹{item.price}
                   </p>
                   <p className="equipment-detail">
-                    <i className={item.available ? "fas fa-check-circle" : "fas fa-times-circle"}></i> 
+                    <i className={item.available ? "fas fa-check-circle" : "fas fa-times-circle"}></i>
                     <strong>Available:</strong> {item.available ? "Yes" : "No"}
                   </p>
                 </div>
@@ -156,6 +157,17 @@ export default function PHome() {
             </div>
           </div>
         )}
+
+	      {/* Fixed Home (FAB) */}
+	      <button
+	        className="provider-home-fab"
+	        aria-label="Go to Provider Home"
+	        title="Provider Home"
+	        onClick={() => navigate('/provider-home')}
+	      >
+	        <FiHome />
+	      </button>
+
       </div>
     </div>
   );

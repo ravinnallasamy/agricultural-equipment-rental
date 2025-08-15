@@ -8,7 +8,8 @@ import {
   FiUser,
   FiLogOut,
   FiSave,
-  FiX
+  FiX,
+  FiHome
 } from 'react-icons/fi';
 import {
   FaPlus
@@ -209,7 +210,7 @@ export default function Add() {
             title="Provider Home"
             onClick={() => navigate('/provider-home')}
           >
-            🏠
+            <FiHome />
           </button>
 
         </div>
