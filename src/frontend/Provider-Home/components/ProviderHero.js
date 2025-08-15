@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../Assets/Logo.png';
+import logo from '../../../Assets/Logo.png';
 import { FiHome, FiUser, FiLogOut } from 'react-icons/fi';
 import '../../Designs/PHome.css';
 
