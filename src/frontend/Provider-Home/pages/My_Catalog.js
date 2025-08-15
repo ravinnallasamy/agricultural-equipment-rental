@@ -35,38 +35,26 @@ const categories = [
   'Other'
 ];
 
-const types = [
-  'Utility Tractor',
-  'Compact Tractor',
-  'Row Crop Tractor',
-  'Garden Tractor',
-  'Combine Harvester',
-  'Forage Harvester',
-  'Potato Harvester',
-  'Sugar Beet Harvester',
-  'Seed Drill',
-  'Planter',
-  'Transplanter',
-  'Broadcasting Equipment',
-  'Plow',
-  'Cultivator',
-  'Harrow',
-  'Rotary Tiller',
-  'Subsoiler',
-  'Irrigation Systems',
-  'Sprinkler Systems',
-  'Drip Irrigation',
-  'Center Pivot',
-  'Mower',
-  'Rake',
-  'Baler',
-  'Tedder',
-  'Heavy Equipment',
-  'Light Equipment',
-  'Hand Tools',
-  'Power Tools',
-  'Other'
-];
+// Types list no longer needed directly; using CATEGORY_TYPE_MAP via getTypesForCategory
+
+// Map categories to relevant types for dependent dropdowns
+const CATEGORY_TYPE_MAP = {
+  'Tractors': ['Utility Tractor', 'Compact Tractor', 'Row Crop Tractor', 'Garden Tractor'],
+  'Harvesters': ['Combine Harvester', 'Forage Harvester', 'Potato Harvester', 'Sugar Beet Harvester'],
+  'Planters': ['Seed Drill', 'Planter', 'Transplanter', 'Broadcasting Equipment'],
+  'Tillage Equipment': ['Plow', 'Cultivator', 'Harrow', 'Rotary Tiller', 'Subsoiler'],
+  'Irrigation Equipment': ['Irrigation Systems', 'Sprinkler Systems', 'Drip Irrigation', 'Center Pivot'],
+  'Hay Equipment': ['Mower', 'Rake', 'Baler', 'Tedder'],
+  'Tools': ['Hand Tools', 'Power Tools'],
+  'Spraying Equipment': ['Other'],
+  'Fertilizer Equipment': ['Other'],
+  'Livestock Equipment': ['Other'],
+  'Other': ['Other']
+};
+
+const DEFAULT_TYPES = ['Heavy Equipment', 'Light Equipment', 'Hand Tools', 'Power Tools', 'Other'];
+const getTypesForCategory = (cat) => CATEGORY_TYPE_MAP[cat] || DEFAULT_TYPES;
+
 
 
 export default function MyCatalog() {
@@ -303,7 +291,7 @@ export default function MyCatalog() {
                             onChange={e => setEditForm({ ...editForm, type: e.target.value })}
                           >
                             <option value="">Select Type</option>
-                            {types.map(t => (
+                            {getTypesForCategory(editForm.category || 'Other').map(t => (
                               <option key={t} value={t}>{t}</option>
                             ))}
                           </select>
