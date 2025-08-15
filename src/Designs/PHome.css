@@ -107,7 +107,7 @@
   height: clamp(72px, 18vw, 150px);
   border-radius: 50%;
   object-fit: cover;
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
   z-index: 10;
@@ -117,9 +117,12 @@
 
 @media (max-width: 768px) {
   .provider-logo {
-    position: static;
-    display: block;
-    margin: 0 auto var(--spacing-md);
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: clamp(56px, 12vw, 88px);
+    height: clamp(56px, 12vw, 88px);
+    margin: 0;
   }
 }
 
