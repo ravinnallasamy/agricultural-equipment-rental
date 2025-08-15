@@ -5,7 +5,7 @@
 
 /* Provider-specific overrides */
 .provider-home-page {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--bg-primary);
   padding: var(--spacing-lg);
   font-family: var(--font-family);
@@ -599,9 +599,16 @@ body {
   }
   
   .catalog-container {
-    height: 65vh;
+    /* allow full height on mobile and let body scroll */
+    height: auto;
+    max-height: none;
   }
-  
+
+  .catalog-body {
+    max-height: none;
+    overflow-y: visible;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }
@@ -626,10 +633,15 @@ body {
   
   .catalog-container {
     height: auto;
-    max-height: 70vh;
+    max-height: none;
     padding: 1rem;
   }
-  
+
+  .catalog-body {
+    max-height: none;
+    overflow-y: visible;
+  }
+
   .catalog-header {
     position: static;
   }

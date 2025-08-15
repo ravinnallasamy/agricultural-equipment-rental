@@ -125,6 +125,27 @@
   background-color: #c0392b;
 }
 
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  width: min(520px, 96vw);
+  max-height: 90svh;
+  overflow: auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .equipment-grid {
@@ -136,7 +157,7 @@
   .my-catalog {
     padding: 20px 15px;
   }
-  
+
   .equipment-grid {
     grid-template-columns: 1fr;
   }

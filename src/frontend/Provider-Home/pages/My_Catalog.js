@@ -62,10 +62,40 @@ export default function MyCatalog() {
     }
   };
 
-  const handleEdit = () => {
-    // Navigate to edit page or open edit modal
-    alert("Edit functionality will be implemented here");
+  const [editItem, setEditItem] = useState(null);
+  const [editForm, setEditForm] = useState({ name: '', category: '', type: '', price: '', address: '', available: true });
+
+  const openEdit = (item) => {
+    setEditItem(item);
+    setEditForm({
+      name: item.name || '',
+      category: item.category || '',
+      type: item.type || '',
+      price: item.price || '',
+      address: item.address || '',
+      available: !!item.available,
+    });
   };
+
+  const closeEdit = () => {
+    setEditItem(null);
+  };
+
+  const saveEdit = async () => {
+    if (!editItem) return;
+    try {
+      const payload = { ...editForm, price: parseFloat(editForm.price) };
+      await axios.put(API_CONFIG.getEquipmentUrl(editItem.id), payload);
+      alert('Equipment updated successfully');
+      closeEdit();
+      fetchEquipment();
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Failed to update equipment';
+      alert(msg);
+    }
+  };
+
+  const handleEdit = (item) => openEdit(item);
 
   const toggleAvailability = async (equipmentId, currentStatus) => {
     try {
@@ -167,7 +197,7 @@ export default function MyCatalog() {
                       </button>
                     </div>
                   </div>
-                  
+
                   <p className="equipment-detail">
                     <strong>Type:</strong> {item.type}
                   </p>
@@ -186,7 +216,7 @@ export default function MyCatalog() {
                       {item.available ? 'Available' : 'Unavailable'}
                     </span>
                   </p>
-                  
+
                   <div className="equipment-actions-bottom">
                     <button
                       className={`action-button ${item.available ? 'info' : 'primary'}`}
@@ -201,9 +231,40 @@ export default function MyCatalog() {
             </div>
           </div>
         )}
+
+        {/* Edit Modal */}
+        {editItem && (
+          <div className="modal-overlay" role="dialog" aria-modal="true">
+            <div className="modal">
+              <h3>Edit Equipment</h3>
+              <label>Name
+                <input className="edit-form-input" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+              </label>
+              <label>Category
+                <input className="edit-form-input" value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
+              </label>
+              <label>Type
+                <input className="edit-form-input" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })} />
+              </label>
+              <label>Price (₹/hr)
+                <input className="edit-form-input" type="number" min="0" step="0.01" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
+              </label>
+              <label>Address
+                <input className="edit-form-input" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
+                Available
+              </label>
+              <div style={{ marginTop: '1rem' }}>
+                <button className="action-button save-button" onClick={saveEdit}>Save</button>
+                <button className="action-button cancel-button" onClick={closeEdit}>Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-  
