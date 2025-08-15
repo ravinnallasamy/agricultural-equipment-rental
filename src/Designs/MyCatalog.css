@@ -145,6 +145,47 @@
   overflow: auto;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
+.modal h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
+}
+.edit-form-input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0.25rem 0 0.85rem 0;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.save-button {
+  background-color: #27ae60;
+  color: #fff;
+}
+.save-button:hover { background-color: #219653; }
+.cancel-button { background-color: #e0e0e0; color: #333; }
+.cancel-button:hover { background-color: #d5d5d5; }
+
+@media (max-width: 480px) {
+  .modal {
+    width: 96vw;
+    padding: 1rem;
+    max-height: 92svh;
+  }
+  .modal-actions {
+    justify-content: stretch;
+  }
+  .modal-actions .action-button {
+    width: 100%;
+  }
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

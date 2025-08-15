@@ -256,7 +256,7 @@ export default function MyCatalog() {
                 <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
                 Available
               </label>
-              <div style={{ marginTop: '1rem' }}>
+              <div className="modal-actions">
                 <button className="action-button save-button" onClick={saveEdit}>Save</button>
                 <button className="action-button cancel-button" onClick={closeEdit}>Cancel</button>
               </div>
