@@ -49,7 +49,9 @@ const API_CONFIG = {
     USER_ACTIVATE: '/auth/user/activate',
     PROVIDER_SIGNUP: '/auth/provider/signup',
     PROVIDER_SIGNIN: '/auth/provider/signin',
-    PROVIDER_ACTIVATE: '/auth/provider/activate'
+    PROVIDER_ACTIVATE: '/auth/provider/activate',
+    FORGOT_PASSWORD: '/auth/password/forgot',
+    RESET_PASSWORD: '/auth/password/reset'
   },
   
   // Data endpoints

@@ -78,6 +78,14 @@ export default function Signin() {
           <button type="submit" className="login-button">
             Login
           </button>
+          <div style={{ marginTop: '0.75rem', textAlign: 'right' }}>
+            <span
+              style={{ color: '#0984e3', cursor: 'pointer', fontSize: '0.9rem' }}
+              onClick={() => navigate(`/forgot-password/${userType}`)}
+            >
+              Forgot password?
+            </span>
+          </div>
         </form>
       </div>
     </div>

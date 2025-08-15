@@ -34,6 +34,8 @@ import Requests from './frontend/Customer-Home/Requests/Requests';
 import MyRequest from './frontend/Customer-Home/Requests/MyRequest';
 import ActivationSuccess from './frontend/activation/ActivationSuccess';
 import ActivationPage from './frontend/activation/ActivationPage';
+import ForgotPassword from './frontend/login/ForgotPassword';
+import ResetPassword from './frontend/login/ResetPassword';
 
 function App() {
   const location = useLocation();
@@ -70,6 +72,8 @@ function App() {
       <Route path="/logout" element={<Logout />} />
       <Route path="/activate/:token" element={<ActivationPage />} />
       <Route path="/activation-success" element={<ActivationSuccess />} />
+      <Route path="/forgot-password/:userType" element={<ForgotPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="*" element={<NoMatch />} />
     </Routes>
   );
