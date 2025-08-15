@@ -4,13 +4,16 @@ body, html {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
-  overflow: hidden;
+  /* Allow vertical scrolling so content isn't cut off at 100% zoom */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .login-page-container,
 .customer-page-container,
 .provider-page-container {
-  min-height: 100vh;
+  /* Use small viewport height for better mobile behavior with browser UI */
+  min-height: 100svh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +27,8 @@ body, html {
   right: 0;
   bottom: 0;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   filter: blur(5px);
   z-index: -1;
   opacity: 0.8;
@@ -35,8 +39,8 @@ body, html {
   top: 20px;
   left: 20px;
   z-index: 1000;
-  width: 150px;
-  height: 150px;
+  width: clamp(64px, 12vw, 150px);
+  height: clamp(64px, 12vw, 150px);
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid white;
@@ -53,9 +57,9 @@ body, html {
 .login-container,
 .customer-container,
 .provider-container {
-  max-width: 400px;
+  max-width: min(400px, 92vw);
   width: 90%;
-  padding: 2.5rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
   text-align: center;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
@@ -69,24 +73,24 @@ body, html {
 .provider-title {
   color: #2c3e50;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
   font-weight: 600;
 }
 
 .button-group {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(0.75rem, 3.5vw, 1.5rem);
 }
 
 .login-button,
 .customer-button,
 .provider-button {
-  padding: 1rem;
+  padding: clamp(0.8rem, 2.8vw, 1rem);
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 3.2vw, 1rem);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
