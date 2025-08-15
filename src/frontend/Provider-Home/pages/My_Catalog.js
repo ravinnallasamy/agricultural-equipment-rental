@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 import '../../../Designs/PHome.css';
+import '../../../Designs/MyCatalog.css';
 import logo from '../../../Assets/Logo.png';
 import {
   FiUser,
@@ -62,11 +63,11 @@ export default function MyCatalog() {
     }
   };
 
-  const [editItem, setEditItem] = useState(null);
+  const [editItemId, setEditItemId] = useState(null);
   const [editForm, setEditForm] = useState({ name: '', category: '', type: '', price: '', address: '', available: true });
 
   const openEdit = (item) => {
-    setEditItem(item);
+    setEditItemId(item.id);
     setEditForm({
       name: item.name || '',
       category: item.category || '',
@@ -78,14 +79,14 @@ export default function MyCatalog() {
   };
 
   const closeEdit = () => {
-    setEditItem(null);
+    setEditItemId(null);
   };
 
   const saveEdit = async () => {
-    if (!editItem) return;
+    if (!editItemId) return;
     try {
       const payload = { ...editForm, price: parseFloat(editForm.price) };
-      await axios.put(API_CONFIG.getEquipmentUrl(editItem.id), payload);
+      await axios.put(API_CONFIG.getEquipmentUrl(editItemId), payload);
       alert('Equipment updated successfully');
       closeEdit();
       fetchEquipment();
@@ -174,114 +175,124 @@ export default function MyCatalog() {
           <div className="catalog-body">
             <div className="equipment-grid">
               {equipmentList.map((item, index) => (
-                <div key={index} className="equipment-card">
+                <div key={index} className={`equipment-card ${editItemId === item.id ? 'card-editable' : ''}`}>
                   <div className="equipment-header">
-                    <h3 className="equipment-name">{item.name}</h3>
+                    {editItemId === item.id ? (
+                      <input
+                        className="card-edit-input"
+                        value={editForm.name}
+                        onChange={e => setEditForm({ ...editForm, name: e.target.value })}
+                        placeholder="Name"
+                      />
+                    ) : (
+                      <h3 className="equipment-name">{item.name}</h3>
+                    )}
+
                     <span className={`availability-status ${item.available ? 'available' : 'unavailable'}`}>
                       {item.available ? '🟢 Available' : '🔴 Rented Out'}
                     </span>
+
                     <div className="equipment-actions">
-                      <button
-                        className="action-btn edit"
-                        onClick={() => handleEdit(item)}
-                        title="Edit Equipment"
-                      >
-                        <FiEdit />
-                      </button>
-                      <button
-                        className="action-btn delete"
-                        onClick={() => handleDelete(item.id)}
-                        title="Delete Equipment"
-                      >
-                        <FiTrash2 />
-                      </button>
+                      {editItemId === item.id ? (
+                        <>
+                          <button className="action-btn edit" onClick={saveEdit} title="Save">💾</button>
+                          <button className="action-btn delete" onClick={closeEdit} title="Cancel">✖</button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className="action-btn edit"
+                            onClick={() => handleEdit(item)}
+                            title="Edit Equipment"
+                          >
+                            <FiEdit />
+                          </button>
+                          <button
+                            className="action-btn delete"
+                            onClick={() => handleDelete(item.id)}
+                            title="Delete Equipment"
+                          >
+                            <FiTrash2 />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
 
-                  <p className="equipment-detail">
-                    <strong>Type:</strong> {item.type}
-                  </p>
-                  <p className="equipment-detail">
-                    <strong>Category:</strong> {item.category}
-                  </p>
-                  <p className="equipment-detail">
-                    <strong>Price/hr:</strong> ₹{item.price}
-                  </p>
-                  <p className="equipment-detail">
-                    <strong>Location:</strong> {item.address || "Not specified"}
-                  </p>
-                  <p className="equipment-detail">
-                    <strong>Status:</strong>{" "}
-                    <span className={`status-badge ${item.available ? 'available' : 'unavailable'}`}>
-                      {item.available ? 'Available' : 'Unavailable'}
-                    </span>
-                  </p>
+                  {editItemId === item.id ? (
+                    <>
+                      <div className="card-edit-row">
+                        <div className="card-edit-field">
+                          <label>Type</label>
+                          <input className="card-edit-input" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })} />
+                        </div>
+                        <div className="card-edit-field">
+                          <label>Category</label>
+                          <input className="card-edit-input" value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
+                        </div>
+                      </div>
+                      <div className="card-edit-row">
+                        <div className="card-edit-field">
+                          <label>Price (₹/hr)</label>
+                          <input className="card-edit-input" type="number" min="0" step="0.01" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
+                        </div>
+                        <div className="card-edit-field">
+                          <label>Location</label>
+                          <input className="card-edit-input" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
+                        </div>
+                      </div>
+                      <div className="toggle-field">
+                        <label className="switch">
+                          <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
+                          <span className="slider" />
+                        </label>
+                        <span>Available</span>
+                      </div>
 
-                  <div className="equipment-actions-bottom">
-                    <button
-                      className={`action-button ${item.available ? 'info' : 'primary'}`}
-                      onClick={() => toggleAvailability(item.id, item.available)}
-                      style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
-                    >
-                      {item.available ? 'Make Unavailable' : 'Make Available'}
-                    </button>
-                  </div>
+                      <div className="card-edit-actions">
+                        <button className="action-button save-button" onClick={saveEdit}>Save</button>
+                        <button className="action-button cancel-button" onClick={closeEdit}>Cancel</button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="equipment-detail">
+                        <strong>Type:</strong> {item.type}
+                      </p>
+                      <p className="equipment-detail">
+                        <strong>Category:</strong> {item.category}
+                      </p>
+                      <p className="equipment-detail">
+                        <strong>Price/hr:</strong> ₹{item.price}
+                      </p>
+                      <p className="equipment-detail">
+                        <strong>Location:</strong> {item.address || 'Not specified'}
+                      </p>
+                      <p className="equipment-detail">
+                        <strong>Status:</strong>{' '}
+                        <span className={`status-badge ${item.available ? 'available' : 'unavailable'}`}>
+                          {item.available ? 'Available' : 'Unavailable'}
+                        </span>
+                      </p>
+
+                      <div className="equipment-actions-bottom">
+                        <button
+                          className={`action-button ${item.available ? 'info' : 'primary'}`}
+                          onClick={() => toggleAvailability(item.id, item.available)}
+                          style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
+                        >
+                          {item.available ? 'Make Unavailable' : 'Make Available'}
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Edit Modal */}
-        {editItem && (
-          <div className="modal-overlay" role="dialog" aria-modal="true">
-            <div className="modal">
-              <div className="modal-header">
-                <h3 className="modal-title">Edit Equipment</h3>
-                <button className="modal-close" aria-label="Close" onClick={closeEdit}>×</button>
-              </div>
-              <div className="modal-body">
-                <div className="form-row">
-                  <div className="form-field">
-                    <label>Name</label>
-                    <input className="form-input" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
-                  </div>
-                  <div className="form-field">
-                    <label>Category</label>
-                    <input className="form-input" value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-field">
-                    <label>Type</label>
-                    <input className="form-input" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })} />
-                  </div>
-                  <div className="form-field">
-                    <label>Price (₹/hr)</label>
-                    <input className="form-input" type="number" min="0" step="0.01" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-field" style={{ gridColumn: '1 / -1' }}>
-                    <label>Address</label>
-                    <input className="form-input" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
-                  </div>
-                </div>
-                <div className="toggle-field">
-                  <label className="switch">
-                    <input type="checkbox" checked={editForm.available} onChange={e => setEditForm({ ...editForm, available: e.target.checked })} />
-                    <span className="slider"></span>
-                  </label>
-                  <span>Available</span>
-                </div>
-              </div>
-              <div className="modal-actions">
-                <button className="action-button save-button" onClick={saveEdit}>Save</button>
-                <button className="action-button cancel-button" onClick={closeEdit}>Cancel</button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Inline modal removed: editing happens directly on the card */}
       </div>
     </div>
   );
