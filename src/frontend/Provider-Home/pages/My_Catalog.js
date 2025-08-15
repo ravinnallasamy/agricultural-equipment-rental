@@ -20,6 +20,55 @@ import {
 } from 'react-icons/fi';
 import { FaBoxes } from 'react-icons/fa';
 
+// Reuse the same options as in Add Equipment
+const categories = [
+  'Tractors',
+  'Harvesters',
+  'Planters',
+  'Tillage Equipment',
+  'Irrigation Equipment',
+  'Hay Equipment',
+  'Tools',
+  'Spraying Equipment',
+  'Fertilizer Equipment',
+  'Livestock Equipment',
+  'Other'
+];
+
+const types = [
+  'Utility Tractor',
+  'Compact Tractor',
+  'Row Crop Tractor',
+  'Garden Tractor',
+  'Combine Harvester',
+  'Forage Harvester',
+  'Potato Harvester',
+  'Sugar Beet Harvester',
+  'Seed Drill',
+  'Planter',
+  'Transplanter',
+  'Broadcasting Equipment',
+  'Plow',
+  'Cultivator',
+  'Harrow',
+  'Rotary Tiller',
+  'Subsoiler',
+  'Irrigation Systems',
+  'Sprinkler Systems',
+  'Drip Irrigation',
+  'Center Pivot',
+  'Mower',
+  'Rake',
+  'Baler',
+  'Tedder',
+  'Heavy Equipment',
+  'Light Equipment',
+  'Hand Tools',
+  'Power Tools',
+  'Other'
+];
+
+
 export default function MyCatalog() {
   const [equipmentList, setEquipmentList] = useState([]);
   const [providerId, setProviderId] = useState("");
@@ -66,13 +115,13 @@ export default function MyCatalog() {
   };
 
   const [editItemId, setEditItemId] = useState(null);
-  const [editForm, setEditForm] = useState({ 
-    name: '', 
-    category: '', 
-    type: '', 
-    price: '', 
-    address: '', 
-    available: true 
+  const [editForm, setEditForm] = useState({
+    name: '',
+    category: '',
+    type: '',
+    price: '',
+    address: '',
+    available: true
   });
 
   const openEdit = (item) => {
@@ -123,7 +172,7 @@ export default function MyCatalog() {
   return (
     <div className="provider-home-page">
       <img src={logo} alt="Logo" className="provider-logo" />
-      
+
       <div className="provider-header">
         <h1 className="welcome-title">My Equipment Catalog</h1>
         <div className="provider-info">
@@ -159,7 +208,7 @@ export default function MyCatalog() {
           className="action-button primary"
           onClick={() => navigate(`/provider/add-equipment/`)}
         >
-          <FiPlusCircle /> Add New Equipment  
+          <FiPlusCircle /> Add New Equipment
         </button>
         <button
           className="action-button secondary"
@@ -179,7 +228,7 @@ export default function MyCatalog() {
             <p className="no-equipment">No equipment found. Start by adding some equipment.</p>
           ) : null}
         </div>
-        
+
         {!isLoading && equipmentList.length > 0 && (
           <div className="catalog-body">
             <div className="equipment-grid">
@@ -248,24 +297,32 @@ export default function MyCatalog() {
                             <FiLayers className="input-icon" />
                             Type
                           </label>
-                          <input
+                          <select
                             className="form-input"
                             value={editForm.type}
                             onChange={e => setEditForm({ ...editForm, type: e.target.value })}
-                            placeholder="Enter type"
-                          />
+                          >
+                            <option value="">Select Type</option>
+                            {types.map(t => (
+                              <option key={t} value={t}>{t}</option>
+                            ))}
+                          </select>
                         </div>
                         <div className="form-group">
                           <label className="form-label">
                             <FiLayers className="input-icon" />
                             Category
                           </label>
-                          <input
+                          <select
                             className="form-input"
                             value={editForm.category}
                             onChange={e => setEditForm({ ...editForm, category: e.target.value })}
-                            placeholder="Enter category"
-                          />
+                          >
+                            <option value="">Select Category</option>
+                            {categories.map(c => (
+                              <option key={c} value={c}>{c}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
 
