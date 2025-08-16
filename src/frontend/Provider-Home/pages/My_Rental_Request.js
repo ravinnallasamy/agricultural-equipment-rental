@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
 
-import logo from '../../../Assets/Logo.png';
 import ProviderHero from '../components/ProviderHero';
 import { FiUser, FiLogOut, FiCheckCircle, FiX, FiHome } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
