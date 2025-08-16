@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../config/api';
+import '../../Designs/Profile.css';
 
 
 export default function Profile() {

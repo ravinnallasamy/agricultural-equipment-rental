@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
+import '../../../Designs/Customer/MyRequest.css';
 import {
   FaTrash,
   FaClock,

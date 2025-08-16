@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
-import '../../../Designs/PHome.css';
+import '../../../Designs/MyRentalRequest.css';
 import ProviderHero from '../components/ProviderHero';
 import { FiUser, FiLogOut, FiCheckCircle, FiX, FiHome } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';

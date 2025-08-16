@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import '../../Designs/Activation.css';
 
 
 const ActivationSuccess = () => {
