@@ -21,7 +21,7 @@ export default function Add() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('loggedUser') || '{}';
+    const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');  // Fixed missing parenthesis
     const userId = user?.id || user?._id;
 
     if (userId) {
