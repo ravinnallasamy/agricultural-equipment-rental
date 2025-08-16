@@ -25,26 +25,28 @@
   --customer-text-muted: #95a5a6;
   --customer-text-light: #ffffff;
   
-  /* Provider Theme Colors */
-  --provider-primary: #1976d2;
-  --provider-primary-light: #42a5f5;
-  --provider-primary-dark: #0d47a1;
-  --provider-secondary: #ff6f00;
-  --provider-accent: #ffc107;
-  --provider-success: #4caf50;
-  --provider-warning: #ff9800;
-  --provider-error: #f44336;
+  /* Provider Theme Colors - Formal Professional */
+  --provider-primary: #2c5aa0;
+  --provider-primary-light: #4a7bc8;
+  --provider-primary-dark: #1e3f7a;
+  --provider-secondary: #34495e;
+  --provider-secondary-light: #5d6d7e;
+  --provider-accent: #e67e22;
+  --provider-accent-light: #f39c12;
+  --provider-success: #27ae60;
+  --provider-warning: #f39c12;
+  --provider-error: #e74c3c;
   
   /* Provider Background Colors */
-  --provider-bg-primary: #f5f8fa;
+  --provider-bg-primary: #f8fafc;
   --provider-bg-secondary: #ffffff;
-  --provider-bg-tertiary: #e3f2fd;
-  --provider-bg-accent: #fff8e1;
+  --provider-bg-tertiary: #ecf0f1;
+  --provider-bg-accent: #fafbfc;
   
   /* Provider Text Colors */
-  --provider-text-primary: #263238;
-  --provider-text-secondary: #546e7a;
-  --provider-text-muted: #90a4ae;
+  --provider-text-primary: #2c3e50;
+  --provider-text-secondary: #5d6d7e;
+  --provider-text-muted: #95a5a6;
   --provider-text-light: #ffffff;
   
   /* Common Design Tokens */

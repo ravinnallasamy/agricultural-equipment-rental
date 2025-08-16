@@ -5,8 +5,6 @@ import API_CONFIG from '../../../config/api';
 import '../../../Designs/MyCatalog.css';
 import ProviderHero from '../components/ProviderHero';
 import {
-  FiUser,
-  FiLogOut,
   FiEdit,
   FiTrash2,
   FiPlusCircle,
