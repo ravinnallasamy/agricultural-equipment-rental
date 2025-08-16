@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
-import '../../../Designs/PHome.css';
+
 import logo from '../../../Assets/Logo.png';
 import ProviderHero from '../components/ProviderHero';
 import { FiUser, FiLogOut, FiCheckCircle, FiX, FiHome } from 'react-icons/fi';
@@ -18,13 +18,13 @@ export default function MyRentalRequest() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-
     if (user && user.id) {
       setProviderId(user.id);
     } else {
       alert("Please login as a provider.");
+      navigate("/signin/provider");
     }
-  }, []);
+  }, [navigate]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -56,6 +56,7 @@ export default function MyRentalRequest() {
 
       setRequests(filtered);
     } catch (err) {
+      console.error("Error fetching data:", err);
     } finally {
       setIsLoading(false);
     }
@@ -133,6 +134,7 @@ export default function MyRentalRequest() {
       <ProviderHero title="My Rental Requests" />
 
       <main className="provider-content">
+        <div className="request-header">
           <div className="location-badge">
             <p>Manage Requests:</p>
             <FaClipboardList />
@@ -158,94 +160,92 @@ export default function MyRentalRequest() {
           </div>
         </div>
 
-          {/* Fixed Home (FAB) */}
-          <button
-            className="provider-home-fab"
-            aria-label="Go to Provider Home"
-            title="Provider Home"
-            onClick={() => navigate('/provider-home')}
-          >
-            <FiHome />
-          </button>
+        {/* Requests Container */}
+        <div className="catalog-container">
+          <div className="catalog-header">
+            <h2 className="catalog-title">Rental Requests</h2>
+            {isLoading ? (
+              <p className="no-equipment">Loading requests...</p>
+            ) : requests.length === 0 ? (
+              <p className="no-equipment">No rental requests found for your equipment.</p>
+            ) : null}
+          </div>
 
-      </div>
+          {!isLoading && requests.length > 0 && (
+            <div className="catalog-body">
+              <div className="equipment-grid">
+                {requests.map((req, index) => {
+                  const user = userMap[String(req.customerId)];
+                  const equipment = req.equipmentId ? equipmentMap[req.equipmentId] : null;
 
-      {/* Requests Container */}
-      <div className="catalog-container">
-        <div className="catalog-header">
-          <h2 className="catalog-title">Rental Requests</h2>
-          {isLoading ? (
-            <p className="no-equipment">Loading requests...</p>
-          ) : requests.length === 0 ? (
-            <p className="no-equipment">No rental requests found for your equipment.</p>
-          ) : null}
-        </div>
-
-        {!isLoading && requests.length > 0 && (
-          <div className="catalog-body">
-            <div className="equipment-grid">
-              {requests.map((req, index) => {
-                const user = userMap[String(req.customerId)];
-                const equipment = req.equipmentId ? equipmentMap[req.equipmentId] : null;
-
-                return (
-                  <div key={req.id || index} className="equipment-card">
-                    <h3 className="equipment-name">{req.equipmentName}</h3>
-                    {equipment && (
+                  return (
+                    <div key={req.id || index} className="equipment-card">
+                      <h3 className="equipment-name">{req.equipmentName}</h3>
+                      {equipment && (
+                        <p className="equipment-detail">
+                          <strong>Equipment Status:</strong>{" "}
+                          <span className={`status-badge ${equipment.available ? 'available' : 'unavailable'}`}>
+                            {equipment.available ? 'Available' : 'Unavailable'}
+                          </span>
+                        </p>
+                      )}
                       <p className="equipment-detail">
-                        <strong>Equipment Status:</strong>{" "}
-                        <span className={`status-badge ${equipment.available ? 'available' : 'unavailable'}`}>
-                          {equipment.available ? 'Available' : 'Unavailable'}
+                        <strong>Customer Name:</strong> {req.customerName}
+                      </p>
+                      <p className="equipment-detail">
+                        <strong>Mobile:</strong> {user?.mobile || req.customerMobile || 'Unknown'}
+                      </p>
+                      {req.equipmentId && (
+                        <p className="equipment-detail">
+                          <strong>Equipment ID:</strong> {req.equipmentId}
+                        </p>
+                      )}
+                      <p className="equipment-detail">
+                        <strong>Requested At:</strong> {new Date(req.requestedAt).toLocaleString()}
+                      </p>
+                      <p className="equipment-detail">
+                        <strong>Request Status:</strong>{" "}
+                        <span className={`status-badge ${req.status.toLowerCase()}`}>
+                          {req.status}
                         </span>
                       </p>
-                    )}
-                    <p className="equipment-detail">
-                      <strong>Customer Name:</strong> {req.customerName}
-                    </p>
-                    <p className="equipment-detail">
-                      <strong>Mobile:</strong> {user?.mobile || req.customerMobile || 'Unknown'}
-                    </p>
-                    {req.equipmentId && (
-                      <p className="equipment-detail">
-                        <strong>Equipment ID:</strong> {req.equipmentId}
-                      </p>
-                    )}
-                    <p className="equipment-detail">
-                      <strong>Requested At:</strong> {new Date(req.requestedAt).toLocaleString()}
-                    </p>
-                    <p className="equipment-detail">
-                      <strong>Request Status:</strong>{" "}
-                      <span className={`status-badge ${req.status.toLowerCase()}`}>
-                        {req.status}
-                      </span>
-                    </p>
 
-                    {req.status === "pending" && (
-                      <div className="action-buttons" style={{ marginTop: '1rem', gap: '0.5rem' }}>
-                        <button
-                          className="action-button primary"
-                          onClick={() => updateStatus(req.id, "approved")}
-                          style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
-                        >
-                          <FiCheckCircle /> Approve
-                        </button>
-                        <button
-                          className="action-button info"
-                          onClick={() => updateStatus(req.id, "rejected")}
-                          style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
-                        >
-                          <FiX /> Reject
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      {req.status === "pending" && (
+                        <div className="action-buttons" style={{ marginTop: '1rem', gap: '0.5rem' }}>
+                          <button
+                            className="action-button primary"
+                            onClick={() => updateStatus(req.id, "approved")}
+                            style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
+                          >
+                            <FiCheckCircle /> Approve
+                          </button>
+                          <button
+                            className="action-button info"
+                            onClick={() => updateStatus(req.id, "rejected")}
+                            style={{ minWidth: 'auto', padding: '0.5rem 1rem' }}
+                          >
+                            <FiX /> Reject
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+
+        {/* Floating Home Button */}
+        <button
+          className="provider-home-fab"
+          aria-label="Go to Provider Home"
+          title="Provider Home"
+          onClick={() => navigate('/provider/home')}
+        >
+          <FiHome />
+        </button>
+      </main>
     </div>
   );
-      </main>
 }

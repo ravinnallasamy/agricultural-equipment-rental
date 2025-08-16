@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../config/api';
-import '../../Designs/Activation.css';
+
 
 const ActivationPage = () => {
   const { token } = useParams();

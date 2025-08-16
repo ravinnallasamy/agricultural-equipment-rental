@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../config/api';
-import '../../Designs/PHome.css';
+
 import ProviderHero from './components/ProviderHero';
 import { FaClipboardList, FaPlusCircle, FaTractor } from 'react-icons/fa';
 

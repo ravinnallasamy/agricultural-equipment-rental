@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../config/api';
-import '../../Designs/Login.css';
+
 import Signinimage from '../../Assets/Signin.png';
 
 export default function Signin() {

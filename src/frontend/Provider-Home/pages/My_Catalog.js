@@ -2,8 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
-import '../../../Designs/PHome.css';
-import '../../../Designs/MyCatalog.css';
+
 import ProviderHero from '../components/ProviderHero';
 import logo from '../../../Assets/Logo.png';
 import {

@@ -9,7 +9,7 @@ import {
   FaBoxOpen,
   FaLeaf
 } from 'react-icons/fa';
-import '../../../Designs/Customer/MyRequest.css';
+
 
 export default function MyRequest() {
   const [myRequests, setMyRequests] = useState([]);

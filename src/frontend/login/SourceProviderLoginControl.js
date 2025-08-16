@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import '../../Designs/LoginControl.css'; // Using the unified CSS
+
 import logoImage from '../../Assets/Logo.png';
 
 export default function SourceProviderLoginControl() {

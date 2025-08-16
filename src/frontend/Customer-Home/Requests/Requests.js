@@ -11,7 +11,7 @@ import {
   FaLeaf
 } from 'react-icons/fa';
 import { BiCategory } from 'react-icons/bi';
-import '../../../Designs/Customer/Requests.css';
+
 
 export default function Requests() {
   const [equipments, setEquipments] = useState([]);

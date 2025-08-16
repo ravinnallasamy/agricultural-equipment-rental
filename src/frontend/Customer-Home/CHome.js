@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../Designs/Customer/CustomerHome.css';
+
 import logoImage from '../../Assets/Logo.png';
 import farmImage from '../../Assets/Farm.png';
 import equipment1 from '../../Assets/Logo.png';

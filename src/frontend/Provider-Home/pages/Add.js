@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_CONFIG from '../../../config/api';
-import '../../../Designs/PHome.css';
+
 import { FiSave, FiX } from 'react-icons/fi';
 import {
   FaPlus

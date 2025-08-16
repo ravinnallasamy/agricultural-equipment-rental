@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../Designs/LoginControl.css';
+
 import logoImage from '../../Assets/Logo.png'; 
 
 export default function LoginControl() {
