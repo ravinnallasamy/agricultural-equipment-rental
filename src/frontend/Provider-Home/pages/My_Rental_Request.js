@@ -140,23 +140,7 @@ export default function MyRentalRequest() {
             {requests.length} Requests
           </div>
 
-          <div className="header-buttons">
-            <button
-              className="profile-button profile"
-              onClick={() => {
-                const type = localStorage.getItem('userType') || 'provider';
-                navigate(`/profile/${type}/${providerId}`);
-              }}
-            >
-              <FiUser /> Profile
-            </button>
-            <button
-              className="profile-button logout"
-              onClick={() => navigate('/logout')}
-            >
-              <FiLogOut /> Logout
-            </button>
-          </div>
+
         </div>
 
         {/* Requests Container */}

@@ -2,24 +2,25 @@
 /* CSS Variables */
 /* ================ */
 :root {
-  /* Colors */
-  --primary: #667eea;
-  --primary-light: #7c8fee;
-  --primary-dark: #5a6fd1;
-  --secondary: #764ba2;
-  --secondary-light: #8a5fb5;
-  --accent: #4f46e5;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ff6b6b;
-  --danger-light: #ff8b8b;
+  /* Provider Theme - Formal Professional Colors */
+  --primary: #2c5aa0;
+  --primary-light: #4a7bc8;
+  --primary-dark: #1e3f7a;
+  --secondary: #34495e;
+  --secondary-light: #5d6d7e;
+  --accent: #e67e22;
+  --accent-light: #f39c12;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --danger-light: #ec7063;
   --white: #ffffff;
-  --light: #f8f9fa;
-  --light-gray: #e9ecef;
-  --gray: #adb5bd;
-  --dark: #212529;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
+  --light: #f8fafc;
+  --light-gray: #ecf0f1;
+  --gray: #bdc3c7;
+  --dark: #2c3e50;
+  --text-primary: #2c3e50;
+  --text-secondary: #5d6d7e;
   
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -65,7 +66,7 @@ body {
 
 .provider-home-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--light), var(--light-gray));
+  background: linear-gradient(180deg, #f8fafc 0%, #ecf0f1 100%);
   padding: var(--spacing-lg);
 }
 
@@ -73,7 +74,7 @@ body {
 /* Hero Section */
 /* ================ */
 .provider-hero {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, #2c5aa0 0%, #34495e 100%);
   padding: var(--spacing-xl) 0;
   box-shadow: var(--shadow-md);
   margin-bottom: var(--spacing-lg);

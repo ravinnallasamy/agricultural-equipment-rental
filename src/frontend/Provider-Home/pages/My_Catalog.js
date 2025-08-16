@@ -162,24 +162,6 @@ export default function MyCatalog() {
           {equipmentList.length} Items
         </div>
 
-        <div className="header-buttons">
-          <button
-            className="profile-button profile"
-            onClick={() => {
-              const userType = localStorage.getItem('userType') || 'provider';
-              navigate(`/profile/${userType}/${providerId}`);
-            }}
-          >
-            <FiUser /> Profile
-          </button>
-          <button
-            className="profile-button logout"
-            onClick={() => navigate('/logout')}
-          >
-            <FiLogOut /> Logout
-          </button>
-        </div>
-
         {/* Fixed Home (FAB) */}
         <button
           className="provider-home-fab"
